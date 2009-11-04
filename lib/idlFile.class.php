@@ -10,7 +10,7 @@ class idlFile {
 	public static function guestMimeTypeFormFilename($filename){
 		
 		// Read extention
-	  preg_match("@.*\.([^\.]*)@", $name, $match);
+	  preg_match("@.*\.([^\.]*)@", $filename, $match);
     $extension=strToLower($match[1]);
     
     // Compare to list

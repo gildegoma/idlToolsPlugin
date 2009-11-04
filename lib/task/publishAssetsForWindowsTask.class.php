@@ -13,21 +13,23 @@ class publishAssetsForWindowsTask extends sfBaseTask {
 
   protected function execute($arguments = array(), $options = array()) {
     $plugins = $this->configuration->getPlugins();
-    foreach ($this->configuration->getAllPluginPaths() as $pluginName => $pluginPath) {
-      $webDir = $pluginPath.DIRECTORY_SEPARATOR.'web';
-      if (is_dir($webDir)) {
-      	$this->log("New symlink for $pluginName");
-        $this->symlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$pluginName);
-      }
+    foreach ($this->configuration->getAllPluginPaths() as $pluginName => $pluginPath)    {
+      if (!in_array($pluginName, $plugins) || ($options['core-only'] && dirname($pluginPath) != $this->configuration->getSymfonyLibDir().'/plugins')){
+        continue;
+      }      
+      $this->log("New symlink for $pluginName");
+      $this->symlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$pluginName);
     }
   }
   
   // Return true if we are on windows vista
   private function is_vista() {
-    return (
-      (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "6.0" )  ||
-      (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "6.1" )
-    );
+    return  (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "6.0" );
+  }
+  
+  // Return true if we are on windows vista
+  private function is_seven() {
+    return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "6.1" );
   }
 
   // Return true if we are on windows xp
@@ -37,12 +39,12 @@ class publishAssetsForWindowsTask extends sfBaseTask {
 
   // Allow to create symbolic links on Vista
   private function symlink ($target, $link) {
-	  if ($this->is_vista() || $this->is_xp()) {
+	  if ($this->is_vista() || $this->is_xp() || $this->is_seven()) {
 	    // Change / to \ because it will break otherwise.
 	    $target = str_replace('/', '\\', $target);
 	    $link = str_replace('/', '\\', $link);
 	  }
-	  if ($this->is_vista()) {
+	  if ($this->is_vista() || $this->is_seven()  ) {
 	  	$command = 'mklink ' . '/j' . ' "' . $link . '" "' . $target . '"';
 	    //$this->log($command);
 	    return exec($command);

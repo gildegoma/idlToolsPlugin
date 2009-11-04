@@ -1,0 +1,475 @@
+extension:
+  dwg:
+    desc:     "Fichiers AutoCAD (d'après NCSA)"
+    mime:     application/acad
+  asd:
+    desc:     "Fichiers Astound"
+    mime:     application/astound
+  asn:
+    desc:     "Fichiers Astound"
+    mime:     application/astound
+  tsp:
+    desc:     "Fichiers TSP"
+    mime:     application/dsptype
+  dxf:
+    desc:     "Fichiers AutoCAD (d'après CERN)"
+    mime:     application/dxf
+  spl:
+    desc:     "Fichiers Flash Futuresplash"
+    mime:     application/futuresplash
+  gz:
+    desc:     "Fichiers GNU Zip"
+    mime:     application/gzip
+  ptlk:
+    desc:     "Fichiers Listenup"
+    mime:     application/listenup
+  hqx:
+    desc:     "Fichiers binaires Macintosh"
+    mime:     application/mac-binhex40
+  mbd:
+    desc:     "Fichiers Mbedlet"
+    mime:     application/mbedlet
+  mif:
+    desc:     "Fichiers FrameMaker Interchange Format"
+    mime:     application/mif
+  xls:
+    desc:     "Fichiers Microsoft Excel"
+    mime:     application/msexcel
+  xla:
+    desc:     "Fichiers Microsoft Excel"
+    mime:     application/msexcel
+  hlp:
+    desc:     "Fichiers d'aide Microsoft Windows"
+    mime:     application/mshelp
+  chm:
+    desc:     "Fichiers d'aide Microsoft Windows"
+    mime:     application/mshelp
+  ppt:
+    desc:     "Fichiers Microsoft Powerpoint"
+    mime:     application/mspowerpoint
+  ppz:
+    desc:     "Fichiers Microsoft Powerpoint"
+    mime:     application/mspowerpoint
+  pps:
+    desc:     "Fichiers Microsoft Powerpoint"
+    mime:     application/mspowerpoint
+  pot:
+    desc:     "Fichiers Microsoft Powerpoint"
+    mime:     application/mspowerpoint
+  doc:
+    desc:     "Fichiers Microsoft Word"
+    mime:     application/msword
+  dot:
+    desc:     "Fichiers Microsoft Word"
+    mime:     application/msword
+  bin:
+    desc:     "Fichiers exécutables"
+    mime:     application/octet-stream
+  exe:
+    desc:     "Fichiers exécutables"
+    mime:     application/octet-stream
+  com:
+    desc:     "Fichiers exécutables"
+    mime:     application/octet-stream
+  dll:
+    desc:     "Fichiers exécutables"
+    mime:     application/octet-stream
+  class:
+    desc:     "Fichiers exécutables"
+    mime:     application/octet-stream
+  oda:
+    desc:     "Fichiers Oda"
+    mime:     application/oda
+  pdf:
+    desc:     "Fichiers Adobe PDF"
+    mime:     application/pdf
+  ai:
+    desc:     "Fichiers Adobe Postscript"
+    mime:     application/postscript
+  eps:
+    desc:     "Fichiers Adobe Postscript"
+    mime:     application/postscript
+  ps:
+    desc:     "Fichiers Adobe Postscript"
+    mime:     application/postscript
+  rtc:
+    desc:     "Fichiers RTC"
+    mime:     application/rtc
+  rtf:
+    desc:     "Fichiers Microsoft RTF"
+    mime:     application/rtf
+  smp:
+    desc:     "Fichiers Studiom"
+    mime:     application/studiom
+  tbk:
+    desc:     "Fichiers Toolbook"
+    mime:     application/toolbook
+  vmd:
+    desc:     "Fichiers Vocaltec Mediadesc"
+    mime:     application/vocaltec-media-desc
+  vmf:
+    desc:     "Fichiers Vocaltec Media"
+    mime:     application/vocaltec-media-file
+  bcpio:
+    desc:     "Fichiers BCPIO"
+    mime:     application/x-bcpio
+  z:
+    desc:     "Fichiers -"
+    mime:     application/x-compress
+  cpio:
+    desc:     "Fichiers CPIO"
+    mime:     application/x-cpio
+  csh:
+    desc:     "Fichiers C-Shellscript"
+    mime:     application/x-csh
+  dcr:
+    desc:     "Fichiers -"
+    mime:     application/x-director
+  dir:
+    desc:     "Fichiers -"
+    mime:     application/x-director
+  dxr:
+    desc:     "Fichiers -"
+    mime:     application/x-director
+  dvi:
+    desc:     "Fichiers DVI"
+    mime:     application/x-dvi
+  evy:
+    desc:     "Fichiers Envoy"
+    mime:     application/x-envoy
+  gtar:
+    desc:     "Fichiers archives GNU tar"
+    mime:     application/x-gtar
+  hdf:
+    desc:     "Fichiers HDF"
+    mime:     application/x-hdf
+  php:
+    desc:     "Fichiers PHP"
+    mime:     application/x-httpd-php
+  phtml:
+    desc:     "Fichiers PHP"
+    mime:     application/x-httpd-php
+  js:
+    desc:     "Fichiers JavaScript côté serveur"
+    mime:     application/x-javascript
+  latex:
+    desc:     "Fichiers source Latex"
+    mime:     application/x-latex
+  bin:
+    desc:     "Fichiers binaires Macintosh"
+    mime:     application/x-macbinary
+  mif:
+    desc:     "Fichiers FrameMaker Interchange Format"
+    mime:     application/x-mif
+  nc:
+    desc:     "Fichiers Unidata CDF"
+    mime:     application/x-netcdf
+  cdf:
+    desc:     "Fichiers Unidata CDF"
+    mime:     application/x-netcdf
+  nsc:
+    desc:     "Fichiers NS Chat"
+    mime:     application/x-nschat
+  sh:
+    desc:     "Fichiers Bourne Shellscript"
+    mime:     application/x-sh
+  shar:
+    desc:     "Fichiers atchives Shell"
+    mime:     application/x-shar
+  swf:
+    desc:     "Fichiers Flash Shockwave"
+    mime:     application/x-shockwave-flash
+  cab:
+    desc:     "Fichiers Flash Shockwave"
+    mime:     application/x-shockwave-flash
+  sprite:
+    desc:     "Fichiers Sprite"
+    mime:     application/x-sprite
+  spr:
+    desc:     "Fichiers Sprite"
+    mime:     application/x-sprite
+  sit:
+    desc:     "Fichiers Stuffit"
+    mime:     application/x-stuffit
+  sca:
+    desc:     "Fichiers Supercard"
+    mime:     application/x-supercard
+  sv4cpio:
+    desc:     "Fichiers CPIO"
+    mime:     application/x-sv4cpio
+  sv4crc:
+    desc:     "Fichiers CPIO avec CRC"
+    mime:     application/x-sv4crc
+  tar:
+    desc:     "Fichiers archives tar"
+    mime:     application/x-tar
+  tcl:
+    desc:     "Fichiers script TCL"
+    mime:     application/x-tcl
+  tex:
+    desc:     "Fichiers TEX"
+    mime:     application/x-tex
+  texi:
+    desc:     "Fichiers TEXinfo"
+    mime:     application/x-texinfo
+  texinfo:
+    desc:     "Fichiers TEXinfo"
+    mime:     application/x-texinfo
+  t:
+    desc:     "Fichiers TROFF (Unix)"
+    mime:     application/x-troff
+  tr:
+    desc:     "Fichiers TROFF (Unix)"
+    mime:     application/x-troff
+  man:
+    desc:     "Fichiers TROFF avec macros MAN (Unix)"
+    mime:     application/x-troff-man
+  troff:
+    desc:     "Fichiers TROFF avec macros MAN (Unix)"
+    mime:     application/x-troff-man
+  me:
+    desc:     "Fichiers TROFF avec macros ME (Unix)"
+    mime:     application/x-troff-me
+  ustar:
+    desc:     "Fichiers archives tar (Posix)"
+    mime:     application/x-ustar
+  src:
+    desc:     "Fichiers source WAIS"
+    mime:     application/x-wais-source
+  zip:
+    desc:     "Fichiers archives ZIP"
+    mime:     application/zip
+  au:
+    desc:     "Fichiers son"
+    mime:     audio/basic
+  snd:
+    desc:     "Fichiers son"
+    mime:     audio/basic
+  es:
+    desc:     "Fichiers Echospeed"
+    mime:     audio/echospeech
+  tsi:
+    desc:     "Fichiers TS-Player"
+    mime:     audio/tsplayer
+  vox:
+    desc:     "Fichiers Vox"
+    mime:     audio/voxware
+  aif:
+    desc:     "Fichiers son AIFF"
+    mime:     audio/x-aiff
+  aiff:
+    desc:     "Fichiers son AIFF"
+    mime:     audio/x-aiff
+  aifc:
+    desc:     "Fichiers son AIFF"
+    mime:     audio/x-aiff
+  dus:
+    desc:     "Fichiers parole"
+    mime:     audio/x-dspeeh
+  cht:
+    desc:     "Fichiers parole"
+    mime:     audio/x-dspeeh
+  midi:
+    desc:     "Fichiers MIDI"
+    mime:     audio/x-midi
+  mid:
+    desc:     "Fichiers MIDI"
+    mime:     audio/x-midi
+  mp2:
+    desc:     "Fichiers MPEG"
+    mime:     audio/x-mpeg
+  ram:
+    desc:     "Fichiers RealAudio"
+    mime:     audio/x-pn-realaudio
+  ra:
+    desc:     "Fichiers RealAudio"
+    mime:     audio/x-pn-realaudio
+  rpm:
+    desc:     "Fichiers plugin RealAudio"
+    mime:     audio/x-pn-realaudio-plugin
+  stream:
+    desc:     "Fichiers -"
+    mime:     audio/x-qt-stream
+  wav:
+    desc:     "Fichiers Wav"
+    mime:     audio/x-wav
+  dwf:
+    desc:     "Fichiers Drawing"
+    mime:     drawing/x-dwf
+  cod:
+    desc:     "Fichiers CIS-Cod"
+    mime:     image/cis-cod
+  ras:
+    desc:     "Fichiers CMU-Raster"
+    mime:     image/cmu-raster
+  fif:
+    desc:     "Fichiers FIF"
+    mime:     image/fif
+  gif:
+    desc:     "Fichiers GIF"
+    mime:     image/gif
+  ief:
+    desc:     "Fichiers IEF"
+    mime:     image/ief
+  jpeg:
+    desc:     "Fichiers JPEG"
+    mime:     image/jpeg
+  jpg:
+    desc:     "Fichiers JPEG"
+    mime:     image/jpeg
+  jpe:
+    desc:     "Fichiers JPEG"
+    mime:     image/jpeg
+  tiff:
+    desc:     "Fichiers TIFF"
+    mime:     image/tiff
+  tif:
+    desc:     "Fichiers TIFF"
+    mime:     image/tiff
+  mcf:
+    desc:     "Fichiers Vasa"
+    mime:     image/vasa
+  wbmp:
+    desc:     "Fichiers Bitmap (WAP)"
+    mime:     image/vnd.wap.wbmp
+  fh4:
+    desc:     "Fichiers Freehand"
+    mime:     image/x-freehand
+  fh5:
+    desc:     "Fichiers Freehand"
+    mime:     image/x-freehand
+  fhc:
+    desc:     "Fichiers Freehand"
+    mime:     image/x-freehand
+  pnm:
+    desc:     "Fichiers PBM Anymap"
+    mime:     image/x-portable-anymap
+  pbm:
+    desc:     "Fichiers Bitmap PBM"
+    mime:     image/x-portable-bitmap
+  pgm:
+    desc:     "Fichiers PBM Graymap"
+    mime:     image/x-portable-graymap
+  ppm:
+    desc:     "Fichiers PBM Pixmap"
+    mime:     image/x-portable-pixmap
+  rgb:
+    desc:     "Fichiers RGB"
+    mime:     image/x-rgb
+  xwd:
+    desc:     "X-Windows Dump"
+    mime:     image/x-windowdump
+  xbm:
+    desc:     "Fichiers XBM"
+    mime:     image/x-xbitmap
+  xpm:
+    desc:     "Fichiers XPM"
+    mime:     image/x-xpixmap
+  wrl:
+    desc:     "Visualisation de mondes virtuels"
+    mime:     model/vrml
+  csv:
+    desc:     "Fichiers de données séparées par des virgules"
+    mime:     text/comma-separated-values
+  css:
+    desc:     "Fichiers de feuilles de style CSS"
+    mime:     text/css
+  htm:
+    desc:     "Fichiers HTML"
+    mime:     text/html
+  html:
+    desc:     "Fichiers HTML"
+    mime:     text/html
+  shtml:
+    desc:     "Fichiers HTML"
+    mime:     text/html
+  js:
+    desc:     "Fichiers JavaScript"
+    mime:     text/javascript
+  txt:
+    desc:     "Fichiers pur texte"
+    mime:     text/plain
+  rtx:
+    desc:     "Fichiers texte enrichi (Richtext)"
+    mime:     text/richtext
+  rtf:
+    desc:     "Fichiers Microsoft RTF"
+    mime:     text/rtf
+  tsv:
+    desc:     "Fichiers de données séparées par des tabulations"
+    mime:     text/tab-separated-values
+  wml:
+    desc:     "Fichiers WML (WAP)"
+    mime:     text/vnd.wap.wml
+  wmlc:
+    desc:     "Fichiers WMLC (WAP)"
+    mime:     application/vnd.wap.wmlc
+  wmls:
+    desc:     "Fichiers script WML (WAP)"
+    mime:     text/vnd.wap.wmlscript
+  wmlsc:
+    desc:     "Fichiers script C WML (WAP)"
+    mime:     application/vnd.wap.wmlscriptc
+  etx:
+    desc:     "Fichiers SeText"
+    mime:     text/x-setext
+  sgm:
+    desc:     "Fichiers SGML"
+    mime:     text/x-sgml
+  sgml:
+    desc:     "Fichiers SGML"
+    mime:     text/x-sgml
+  talk:
+    desc:     "Fichiers Speech"
+    mime:     text/x-speech
+  spc:
+    desc:     "Fichiers Speech"
+    mime:     text/x-speech
+  mpeg:
+    desc:     "Fichiers MPEG"
+    mime:     video/mpeg
+  mpg:
+    desc:     "Fichiers MPEG"
+    mime:     video/mpeg
+  mpe:
+    desc:     "Fichiers MPEG"
+    mime:     video/mpeg
+  mov:
+    desc:     "Fichiers Quicktime"
+    mime:     video/quicktime
+  qt:
+    desc:     "Fichiers Quicktime"
+    mime:     video/quicktime
+  iv:
+    desc:     "Fichiers Vivo"
+    mime:     video/vnd.vivo
+  vivo:
+    desc:     "Fichiers Vivo"
+    mime:     video/vnd.vivo
+  avi:
+    desc:     "Fichiers Microsoft AVI"
+    mime:     video/x-msvideo
+  movie:
+    desc:     "Fichiers Movie"
+    mime:     video/x-sgi-movie
+  vts:
+    desc:     "Fichiers FormulaOne"
+    mime:     workbook/formulaone
+  vtts:
+    desc:     "Fichiers FormulaOne"
+    mime:     workbook/formulaone
+  3dmf:
+    desc:     "Fichiers DMF"
+    mime:     x-world/x-3dmf
+  3dm:
+    desc:     "Fichiers DMF"
+    mime:     x-world/x-3dmf
+  qd3d:
+    desc:     "Fichiers DMF"
+    mime:     x-world/x-3dmf
+  qd3:
+    desc:     "Fichiers DMF"
+    mime:     x-world/x-3dmf
+  wrl:
+    desc:     "Fichiers VRML"
+    mime:     x-world/x-vrml

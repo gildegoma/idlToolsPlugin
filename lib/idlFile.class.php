@@ -49,4 +49,58 @@ class idlFile {
       throw new Exception("Impossible to open the file : $source");
     }
   }
+  
+  
+  public static function sendToClient($filepath, $filename=""){
+    
+    // Guessing filename
+    if ($filename=="") {
+      $filename = basename($filepath);
+    }
+    
+    // Analize of the file and log
+    $path = preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $filepath);
+      preg_match("@.*\.([^\.]*)@", $filename, $match);
+    $extension=strToLower($match[1]);
+    $type = self::guestMimeTypeFormFilename($filename);
+    sfContext::getInstance()->getLogger()->info("Start download of the file: $path, name: $filename, extension: $extension, mimetype: $type");
+        
+    // Detection du browser
+    if(preg_match("@Opera(/| )([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
+      $browser="Opera";
+    elseif(preg_match("@MSIE ([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
+      $browser="Internet Explorer";
+    else 
+      $browser="Mozilla";
+    
+    // date courante
+    $now=gmdate('D, d M Y H:i:s').' GMT';
+    
+    // Configuration des headers
+    header('Last-Modified', $now);
+    header('Expires', $now); 
+    header("Content-Description: File Transfer");
+    header("Content-Type: $type");
+    // TODO, convert the filename, because if it contains space, it's not transmitted complettly
+    header("Content-Disposition: attachment; filename=$filename");
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($path));
+    
+    // Internet Explorer specific header
+    if(preg_match('/msie|(microsoft internet explorer)/i', $_SERVER['HTTP_USER_AGENT'])) {
+      header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+      header('Pragma', 'public');
+    }
+    else{
+      header('Pragma', 'no-cache');
+    }
+    
+    // Envoi du fichier
+    ob_end_clean();
+    readfile($path);
+    
+  }
 }

@@ -41,23 +41,25 @@ class publishAssetsForWindowsTask extends sfBaseTask {
 
   // Allow to create symbolic links on Vista
   private function symlink ($target, $link) {
-	  if ($this->is_vista() || $this->is_xp() || $this->is_seven()) {
-	    // Change / to \ because it will break otherwise.
-	    $target = str_replace('/', '\\', $target);
-	    $link = str_replace('/', '\\', $link);
-	  }
-	  if ($this->is_vista() || $this->is_seven()  ) {
-	  	$command = 'mklink ' . '/j' . ' "' . $link . '" "' . $target . '"';
-	    //$this->log($command);
-	    return exec($command);
-	  } else
-	  if ($this->is_xp()) {
-	    $command = sfConfig::get('sf_plugins_dir')."\idlToolsPlugin\bin\junction.exe $link $target";
-	    //$this->log($command);
-      return exec($command);
-	  } else {
-	    throw new Exception("This function on working only on XP, Vista and Seven based system");
-	  }
+    if(is_dir($target)){
+		  if ($this->is_vista() || $this->is_xp() || $this->is_seven()) {
+		    // Change / to \ because it will break otherwise.
+		    $target = str_replace('/', '\\', $target);
+		    $link = str_replace('/', '\\', $link);
+		  }
+		  if ($this->is_vista() || $this->is_seven()  ) {
+		  	$command = 'mklink ' . '/j' . ' "' . $link . '" "' . $target . '"';
+		    //$this->log($command);
+		    return exec($command);
+		  } else
+		  if ($this->is_xp()) {
+		    $command = sfConfig::get('sf_plugins_dir')."\idlToolsPlugin\bin\junction.exe $link $target";
+		    //$this->log($command);
+	      return exec($command);
+		  } else {
+		    throw new Exception("This function on working only on XP, Vista and Seven based system");
+		  }
+    }
 	}
   
 }

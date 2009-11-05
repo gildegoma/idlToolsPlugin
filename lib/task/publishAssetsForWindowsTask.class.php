@@ -12,12 +12,14 @@ class publishAssetsForWindowsTask extends sfBaseTask {
   }
 
   protected function execute($arguments = array(), $options = array()) {
+     
     $plugins = $this->configuration->getPlugins();
     foreach ($this->configuration->getAllPluginPaths() as $pluginName => $pluginPath)    {
       if (!in_array($pluginName, $plugins) || ($options['core-only'] && dirname($pluginPath) != $this->configuration->getSymfonyLibDir().'/plugins')){
         continue;
       }      
       $this->log("New symlink for $pluginName");
+      $webDir = $pluginPath.DIRECTORY_SEPARATOR.'web';
       $this->symlink($webDir, sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$pluginName);
     }
   }
@@ -54,7 +56,7 @@ class publishAssetsForWindowsTask extends sfBaseTask {
 	    //$this->log($command);
       return exec($command);
 	  } else {
-	    throw new Exception("This function on working only on Windows based system");
+	    throw new Exception("This function on working only on XP, Vista and Seven based system");
 	  }
 	}
   

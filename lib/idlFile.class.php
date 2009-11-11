@@ -3,9 +3,9 @@
 class idlFile {
 	
 	/**
-	 * 
-	 * @param unknown_type $filename
-	 * @return unknown_type
+	 * Try to guest the mimetype of a file by checking is extention
+	 * @param string $filename
+	 * @return string
 	 */
 	public static function guestMimeTypeFormFilename($filename){
 		
@@ -51,6 +51,11 @@ class idlFile {
   }
   
   
+  /**
+   * Send the specified file to the client
+   * @param string $filepath
+   * @param string $filename
+   */
   public static function sendToClient($filepath, $filename=""){
     
     // Guessing filename
@@ -98,9 +103,40 @@ class idlFile {
       header('Pragma', 'no-cache');
     }
     
-    // Envoi du fichier
+    // Sending, the ob_end_clean in mandatory to avoid memory_limit problem
     ob_end_clean();
-    readfile($path);
-    
+    readfile($path);  
   }
+  
+  
+  /**
+   * Create symlink on Windows based system
+   * @param unknown_type $target
+   * @param unknown_type $link
+   * @return unknown_type
+   */
+  public static function winSymlink ($target, $link) {  
+    // Convert potential / to \ 
+    $target = str_replace('/', '\\', $target);
+    $link = str_replace('/', '\\', $link);
+    
+    // Vista and Seven have a native function
+    if ( in_array(idlServer::getOS(), array("VISTA", "SEVEN"))  ) {
+      $command = 'mklink ' . '/j' . ' "' . $link . '" "' . $target . '"';
+      //$this->log($command);
+      return exec($command);
+    } 
+    // XP require an executable
+    elseif ( idlServer::getOS() == "XP") {
+      $command = sfConfig::get('sf_plugins_dir')."\idlToolsPlugin\bin\junction.exe $link $target";
+      //$this->log($command);
+      return exec($command);
+    } 
+    // Other system is not appicable
+    else {
+      throw new Exception("This function is working only on XP, Vista and Seven based system");
+    }
+  }  
+  
+
 }

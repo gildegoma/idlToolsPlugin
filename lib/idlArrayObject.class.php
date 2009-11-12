@@ -89,4 +89,10 @@ abstract class idlArrayObject implements ArrayAccess{
     }
   }
   
+  /**
+   * Used, when data are unusful
+   */
+  protected function doNothing($data){
+  }
+  
 }

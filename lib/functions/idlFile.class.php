@@ -1,6 +1,6 @@
 <?php
 
-class idlFile {
+class idlFile extends idlFunction {
 	
 	/**
 	 * Try to guest the mimetype of a file by checking is extention

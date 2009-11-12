@@ -1,6 +1,6 @@
 <?php
 
-class idlServer {
+class idlServer extends idlFunction {
   
   /**
    * Return the current Operating System

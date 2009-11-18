@@ -17,4 +17,21 @@ class idlArray extends idlFunction {
     }
     return array_merge($original, $new);
   }
+  
+  public static function toString($array, $withKey = false){
+    $text = "[";
+    foreach ($array as $key => $value){
+      // Add a value separator
+      if ($text[strlen($text)-1] != "["){
+        $text .= ",";
+      }
+      // Add the key
+      if ($withKey){
+        $text .= $key . "=>";
+      }
+      // Add the value ( this is recusive if need)
+      $text .= (is_array($value) ? self::toString($value) : $value);
+    }
+    return $text."]";;
+  }
 }

@@ -1,0 +1,3 @@
+idlRequestExplorer:
+  url: /idlRequestExplorer/*
+  param: {module: idlRequestExplorer, action: rawText}

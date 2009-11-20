@@ -53,22 +53,33 @@ class idlFile extends idlFunction {
   
   /**
    * Send the specified file to the client
-   * @param string $filepath
+   * @param string $data, can be a path to a file or a data stream
    * @param string $filename
    */
-  public static function sendToClient($filepath, $filename=""){
+  public static function sendToClient($data, $filename=""){
     
-    // Guessing filename
-    if ($filename=="") {
-      $filename = basename($filepath);
+    // File or data
+    if ( file_exists($data) ){
+      $isFile = true;
+      $filepath = $data;
+      $path = preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $filepath);
+      // Guessing filename
+      if ($filename=="") {
+        $filename = basename($filepath);
+      }
+    }
+    else {
+      $isFile = false;
+      if ($filename == "")
+        throw new Exception("You must provide a file name");
     }
     
-    // Analize of the file and log
-    $path = preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $filepath);
-      preg_match("@.*\.([^\.]*)@", $filename, $match);
+    
+    // Get extention
+    preg_match("@.*\.([^\.]*)@", $filename, $match);
     $extension=strToLower($match[1]);
     $type = self::guestMimeTypeFormFilename($filename);
-    sfContext::getInstance()->getLogger()->info("Start download of the file: $path, name: $filename, extension: $extension, mimetype: $type");
+    sfContext::getInstance()->getLogger()->info("Start download of the file: $filename, extension: $extension, mimetype: $type");
         
     // Detection du browser
     if(preg_match("@Opera(/| )([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
@@ -92,7 +103,7 @@ class idlFile extends idlFunction {
     header('Expires: 0');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
-    header('Content-Length: ' . filesize($path));
+    header('Content-Length: ' . $isFile ? filesize($path) : strlen($data) );
     
     // Internet Explorer specific header
     if(preg_match('/msie|(microsoft internet explorer)/i', $_SERVER['HTTP_USER_AGENT'])) {
@@ -105,7 +116,12 @@ class idlFile extends idlFunction {
     
     // Sending, the ob_end_clean in mandatory to avoid memory_limit problem
     ob_end_clean();
-    readfile($path);  
+    if ( $isFile) {
+      readfile($path);
+    }
+    else {
+      echo $data;
+    }  
   }
   
   

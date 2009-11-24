@@ -15,6 +15,12 @@ class idlServer extends idlFunction {
       return "XP";
     else
       return "UNKNOWN";
-  } 
+  }
+
+  public static function isWindows() {
+  	$os = self::getOS();
+  	return $os == "VISTA" || $os == "SEVEN" || $os == "XP";
+  }
+  
    
 }

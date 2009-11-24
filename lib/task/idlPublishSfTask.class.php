@@ -1,7 +1,7 @@
 <?php
 
 class idlPublishSfTask extends sfPluginBaseTask {
-	
+
   protected function configure() {
     parent::configure();
     $this->aliases          = array('sf');
@@ -12,23 +12,23 @@ class idlPublishSfTask extends sfPluginBaseTask {
 Publish SF assets with symbolics links ( also works on windows )
 EOT;
   }
-  
+
   /**
    * @see sfTask
    */
   protected function execute($arguments = array(), $options = array()) {
-  	
+
   	$dest = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'sf';
     $org = sfConfig::get('sf_symfony_lib_dir').DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.
-      'data'.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'sf'; 
-  	
+      'data'.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'sf';
+
   	if ( idlServer::isWindows() ) {
-  	  idlFile::winSymlink($dest, $org);
+  	  idlFile::winSymlink( $org, $dest);
     }
     else {
       $filesystem = new sfFilesystem();
       $filesystem->relativeSymlink($org, $dest, true);
     }
   }
-   
+
 }

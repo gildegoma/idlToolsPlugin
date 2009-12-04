@@ -25,16 +25,23 @@ class idlFile extends idlFunction {
     	// Default extension
       return 'application/octet-stream';
     }
-	}
-	
-	/**
-	 * Copy a file or an url to a local file
-	 * @param unknown_type $url
-	 * @param unknown_type $dirname
-	 * @param unknown_type $new_name
-	 * @return boolean copy success
-	 */
-	public static function copyFile($source, $dirname, $new_name=""){
+  }
+  
+  /**
+   * Copy a file or an url to a local file
+   * @param unknown_type $url
+   * @param unknown_type $dirname
+   * @param unknown_type $new_name
+   * @return boolean copy success
+   */
+  public static function copyFile($source, $dirname, $new_name=""){
+  
+    // If not a file, guest it's an url, so try to clean up
+    if ( ! is_file($source) ){
+      $source = idlUrl::cleanup($source);
+    }
+    
+    // Proceed the copy
     @$file = fopen ($source, "rb");
     if ($file) {
       $filename = basename($source);
@@ -45,6 +52,7 @@ class idlFile extends idlFunction {
       }
       fclose($fc);
     }
+    // Unable to open, throw an exception
     else {
       throw new Exception("Impossible to open the file : $source");
     }

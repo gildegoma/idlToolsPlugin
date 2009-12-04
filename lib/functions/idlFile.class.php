@@ -162,5 +162,15 @@ class idlFile extends idlFunction {
     }
   }  
   
-
+  public static function createCleanFileName($dirtyName){
+    $dirtyName = utf8_decode($dirtyName);
+    $withoutAccent = strtr($dirtyName,utf8_decode('ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ'),
+                                                  'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+    //return $withoutAccent;
+    $withoutMaj = strtolower($withoutAccent);
+    //return $withoutMaj;
+    $withoutSpecCar = preg_replace("/[^a-z0-9\\.\\-\\_]/i", "_", $withoutMaj);
+    //Allows letters a-z, digits, point (\\.), hyphen (\\-), and underscore (\\_)
+    return $withoutSpecCar;
+  }
 }

@@ -64,12 +64,13 @@ class idlFile extends idlFunction {
    * @param string $filename Name of the attatchement, by default it use the current
    *        filename
    */
-  public static function sendFileToClient($path, $filename = null){
+  public static function sendFileToClient($path, $filename = null, $mimetype = ""){
     return self::__sendToClient(array(
       'type' => 'file',
       'path' => preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $path),
       'filename' => isset($filename) ? $filename : basename($path),
-      'size' => filesize($path)
+      'size' => filesize($path),
+      'mimetype' => $mimetype
     ));
   }
 
@@ -78,12 +79,13 @@ class idlFile extends idlFunction {
    * @param string $data The data stream to send
    * @param string $filename Name of the attatchement
    */
-  public static function sendDataToClient($data, $filename){
+  public static function sendDataToClient($data, $filename, $mimetype = ""){
     return self::__sendToClient(array(
       'type' => 'data',
       'data' => $data,
       'filename' => $filename,
-      'size' => strlen($data)
+      'size' => strlen($data),
+      'mimetype' => $mimetype
     ));
   }
   
@@ -93,12 +95,13 @@ class idlFile extends idlFunction {
    * @param string $filename Name of the attatchement
    * @param int $size Size of the remote content in bytes 
    */
-  public static function sendUrlToClient($url, $filename, $size = 0){
+  public static function sendUrlToClient($url, $filename, $size = 0, $mimetype = ""){
     return self::__sendToClient(array(
       'type' => 'url',
       'path' => $url,
       'filename' => $filename,
-      'size' => $size
+      'size' => $size,
+      'mimetype' => $mimetype
     ));
     
   }
@@ -116,8 +119,11 @@ class idlFile extends idlFunction {
    */
   public static function __sendToClient($options){
       
-    // Get mimetype
-    $mimetype = self::guestMimeTypeFormFilename($options['filename']);
+    // Get mimetype if not define
+    if ($mimetype == "") {
+      $mimetype = self::guestMimeTypeFormFilename($options['filename']);
+    }
+    
     sfContext::getInstance()->getLogger()->info("Start download of the file: {$options['filename']}, mimetype: $mimetype");
         
     // Browser detection

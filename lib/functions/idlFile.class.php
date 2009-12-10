@@ -58,38 +58,69 @@ class idlFile extends idlFunction {
     }
   }
   
-  
   /**
    * Send the specified file to the client
-   * @param string $data, can be a path to a file or a data stream
-   * @param string $filename
+   * @param string $path Local path to file
+   * @param string $filename Name of the attatchement, by default it use the current
+   *        filename
    */
-  public static function sendToClient($data, $filename=""){
+  public static function sendFileToClient($path, $filename = null){
+    return self::__sendToClient(array(
+      'type' => 'file',
+      'path' => preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $path),
+      'filename' => isset($filename) ? $filename : basename($path),
+      'size' => filesize($path)
+    ));
+  }
+
+  /**
+   * Send the specified data stream to the client
+   * @param string $data The data stream to send
+   * @param string $filename Name of the attatchement
+   */
+  public static function sendDataToClient($data, $filename){
+    return self::__sendToClient(array(
+      'type' => 'data',
+      'data' => $data,
+      'filename' => $filename,
+      'size' => strlen($data)
+    ));
+  }
+  
+  /**
+   * Send the specified URL to the client
+   * @param string $url URL to retrieved and to send
+   * @param string $filename Name of the attatchement
+   * @param int $size Size of the remote content in bytes 
+   */
+  public static function sendUrlToClient($url, $filename, $size = 0){
+    return self::__sendToClient(array(
+      'type' => 'url',
+      'path' => $url,
+      'filename' => $filename,
+      'size' => $size
+    ));
     
-    // File or data
-    if ( file_exists($data) ){
-      $isFile = true;
-      $filepath = $data;
-      $path = preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $filepath);
-      // Guessing filename
-      if ($filename=="") {
-        $filename = basename($filepath);
-      }
-    }
-    else {
-      $isFile = false;
-      if ($filename == "")
-        throw new Exception("You must provide a file name");
-    }
-    
-    
-    // Get extention
-    preg_match("@.*\.([^\.]*)@", $filename, $match);
-    $extension=strToLower($match[1]);
-    $type = self::guestMimeTypeFormFilename($filename);
-    sfContext::getInstance()->getLogger()->info("Start download of the file: $filename, extension: $extension, mimetype: $type");
+  }
+  
+  
+  /**
+   * Private function send content to client, don't use it directly, use instead 
+   *  the functions:
+   *   * sendFileToClient
+   *   * sendDataToClient
+   *   * sendUrlToClient
+   * @param array $options Various options of the send
+   * 
+   * TODO Need a full review of all header to better match standard
+   */
+  public static function __sendToClient($options){
+      
+    // Get mimetype
+    $mimetype = self::guestMimeTypeFormFilename($options['filename']);
+    sfContext::getInstance()->getLogger()->info("Start download of the file: {$options['filename']}, mimetype: $mimetype");
         
-    // Detection du browser
+    // Browser detection
     if(preg_match("@Opera(/| )([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
       $browser="Opera";
     elseif(preg_match("@MSIE ([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
@@ -97,24 +128,22 @@ class idlFile extends idlFunction {
     else 
       $browser="Mozilla";
     
-    // date courante
-    $now=gmdate('D, d M Y H:i:s').' GMT';
+    // Format the current date
+    $now = gmdate('D, d M Y H:i:s').' GMT';
     
-    // Configuration des headers
+    // Write down the headers
     header('Last-Modified', $now);
     header('Expires', $now); 
     header("Content-Description: File Transfer");
-    header("Content-Type: $type");
+    header("Content-Type: $mimetype");
     // TODO, convert the filename, because if it contains space, it's not transmitted complettly
-    header("Content-Disposition: attachment; filename=$filename");
+    header("Content-Disposition: attachment; filename=".$options['filename']);
     header('Content-Transfer-Encoding: binary');
     header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    header('Content-Length: ' . $isFile ? filesize($path) : strlen($data) );
+    header('Content-Length: ' . $options['size']);
     
-    // Internet Explorer specific header
-    if(preg_match('/msie|(microsoft internet explorer)/i', $_SERVER['HTTP_USER_AGENT'])) {
+    // Internet Explorer specific headers
+    if ($browser == "Internet Explorer") {
       header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
       header('Pragma', 'public');
     }
@@ -124,11 +153,11 @@ class idlFile extends idlFunction {
     
     // Sending, the ob_end_clean in mandatory to avoid memory_limit problem
     ob_end_clean();
-    if ( $isFile) {
-      readfile($path);
+    if ( $options['type'] == 'data' ) {
+      echo $options['data'];
     }
     else {
-      echo $data;
+      readfile($options['path']);
     }  
   }
   

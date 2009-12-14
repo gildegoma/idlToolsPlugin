@@ -5,7 +5,7 @@ class idlRequestExplorerActions extends sfActions {
   public function executeRawText(sfWebRequest $request){
     sfConfig::set('sf_web_debug', false);
     $text = "[Query Explorer, part of the plugin idlToolsPlugin] \n=====Request details======:\n\n";
-    $text .= "METHOD: ". $request->getMethodName()."\n";
+    $text .= "METHOD: ". $request->getMethod()."\n";
     
     $text .= "\nGET:\n";
     $text .= $this->parametersToString($request->getGetParameters());

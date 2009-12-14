@@ -15,7 +15,7 @@ class sfWebDebugPanelAssets extends sfWebDebugPanel
   public function getPanelContent()
   {
     $response = sfContext::getInstance()->getResponse();
-    sfLoader::loadHelpers('Asset');
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Asset');
     $html = '';
 
     if ($stylesheets = $response->getStylesheets())

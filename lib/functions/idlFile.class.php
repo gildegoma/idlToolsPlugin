@@ -146,7 +146,6 @@ class idlFile extends idlFunction {
     // TODO, convert the filename, because if it contains space, it's not transmitted complettly
     $resp->setHttpHeader("Content-Disposition", "attachment; filename=".$options['filename']);
     $resp->setHttpHeader('Content-Transfer-Encoding', 'binary');
-    $resp->setHttpHeader('Expires', 0);
     $resp->setHttpHeader('Content-Length', $options['size']);
     
     // Internet Explorer specific headers

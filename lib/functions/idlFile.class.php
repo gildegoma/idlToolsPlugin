@@ -138,33 +138,38 @@ class idlFile extends idlFunction {
     $now = gmdate('D, d M Y H:i:s').' GMT';
     
     // Write down the headers
-    header('Last-Modified', $now);
-    header('Expires', $now); 
-    header("Content-Description: File Transfer");
-    header("Content-Type: $mimetype");
+    $resp = sfContext::getInstance()->getResponse();
+    $resp->setHttpHeader('Last-Modified', $now);
+    $resp->setHttpHeader('Expires', $now); 
+    $resp->setHttpHeader('Content-Description',"File Transfer");
+    $resp->setHttpHeader('Content-Type', $mimetype);
     // TODO, convert the filename, because if it contains space, it's not transmitted complettly
-    header("Content-Disposition: attachment; filename=".$options['filename']);
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Content-Length: ' . $options['size']);
+    $resp->setHttpHeader("Content-Disposition", "attachment; filename=".$options['filename']);
+    $resp->setHttpHeader('Content-Transfer-Encoding', 'binary');
+    $resp->setHttpHeader('Expires', 0);
+    $resp->setHttpHeader('Content-Length', $options['size']);
     
     // Internet Explorer specific headers
     if ($browser == "Internet Explorer") {
-      header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
-      header('Pragma', 'public');
+      $resp->setHttpHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+      $resp->setHttpHeader('Pragma', 'public');
     }
     else{
-      header('Pragma', 'no-cache');
+      $resp->setHttpHeader('Pragma', 'no-cache');
     }
     
     // Sending, the ob_end_clean in mandatory to avoid memory_limit problem
     ob_end_clean();
+    // Force sending the header
+    $resp->sendHttpHeaders();
+    // Transfer the file
     if ( $options['type'] == 'data' ) {
       echo $options['data'];
     }
     else {
       readfile($options['path']);
-    }  
+    }
+    
   }
   
   

@@ -18,7 +18,19 @@ class idlArray extends idlFunction {
     return array_merge($original, $new);
   }
   
+  
+  /**
+   * toString function convert a php array to a readable string 
+   * @param array $array The array to convert
+   * @param boolean $withKey If set to true, the keys of the array will be display
+   * @return string
+   */
   public static function toString($array, $withKey = false){
+
+  	// Treat only array
+  	if ( ! isset($array) || ! is_array($array))
+  	  throw new Exception("The function idlArray::toString required an array as first parameter");
+  	
     $text = "[";
     foreach ($array as $key => $value){
       // Add a value separator

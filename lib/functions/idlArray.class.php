@@ -30,7 +30,7 @@ class idlArray extends idlFunction {
         $text .= $key . "=>";
       }
       // Add the value ( this is recusive if need)
-      $text .= (is_array($value) ? self::toString($value) : $value);
+      $text .= (is_array($value) ? self::toString($value, $withKey) : $value);
     }
     return $text."]";;
   }

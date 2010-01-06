@@ -3,6 +3,16 @@
 class idlFile extends idlFunction {
 	
 	/**
+	 * Extract extention for a filename
+	 * @param string $filename
+	 * @return string
+	 */
+	public static function getExtention($filename){
+    preg_match("@.*\.([^\.]*)@", $filename, $match);
+    return $match[1];
+	}
+	
+	/**
 	 * Try to guest the mimetype of a file by checking is extention
 	 * @param string $filename
 	 * @return string
@@ -10,8 +20,7 @@ class idlFile extends idlFunction {
 	public static function guestMimeTypeFormFilename($filename){
 		
 		// Read extention
-	  preg_match("@.*\.([^\.]*)@", $filename, $match);
-    $extension=strToLower($match[1]);
+	  $extension=strToLower(idlFile::getExtention($filename));
     
     // Compare to list
     // TODO cache the list for multiple call

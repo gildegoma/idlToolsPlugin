@@ -28,24 +28,25 @@ class idlBrowserSpecificFilter extends sfFilter {
     
     // Decorate the response with the browser version of the client
     if ($newClasses != "") {
-      // Catch the body parameters
-      $response = $this->getContext()->getResponse();
-      preg_match("@<body([^>]*)>@", $response->getContent(), $match);
-      $bodyParameters = $match[1];
       
-      // Catch the potential existing class parameter
-      $existingClasses = "";
-      if (preg_match("@class\s*=\s*[\"']([^\"']*)[\"']@", $bodyParameters, $match) == 1) {
-        $classParam = $match[0];
-        $existingClasses = $match[1];
-        // Write down the new classes
-        $bodyParameters = str_replace($classParam, "class='$existingClasses $newClasses'", $bodyParameters);
-      }
-      else {
-        $bodyParameters .= " class='$newClasses'";
-      }
-              
-      $response->setContent(preg_replace("@<body[^>]*>@", "<body $bodyParameters>", $response->getContent()));
+    	// If there is a body tab in the response, add the browser class to it
+      $response = $this->getContext()->getResponse();
+      if (preg_match("@<body([^>]*)>@", $response->getContent(), $match) ==1){
+	      $bodyParameters = $match[1];
+	      
+	      // Catch the potential existing class parameter
+	      $existingClasses = "";
+	      if (preg_match("@class\s*=\s*[\"']([^\"']*)[\"']@", $bodyParameters, $match) == 1) {
+	        $classParam = $match[0];
+	        $existingClasses = $match[1];
+	        // Write down the new classes
+	        $bodyParameters = str_replace($classParam, "class='$existingClasses $newClasses'", $bodyParameters);
+	      }
+	      else {
+	        $bodyParameters .= " class='$newClasses'";
+	      }
+	      $response->setContent(preg_replace("@<body[^>]*>@", "<body $bodyParameters>", $response->getContent()));
+	    }
     }
   }
 }

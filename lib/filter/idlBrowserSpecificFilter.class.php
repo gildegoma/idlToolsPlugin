@@ -1,6 +1,6 @@
 <?php
 
-class browserFilter extends sfFilter {
+class idlBrowserSpecificFilter extends sfFilter {
   
   public static $managedBrowsers = array(
     'msie' => 'ei',

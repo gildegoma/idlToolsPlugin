@@ -1,5 +1,25 @@
 <?php
 
+/**
+ * Symfony filter allowing to add specific browser class in the body tag
+ *  this allow to easily add browser specific CSS rules.
+ *  
+ *  Exemple:
+ *   In your CSS file, you can do things like this:
+ *   
+ *   #toolbar {
+ *     color : red;
+ *   }
+ *   .if-browser-ie #toolbar {
+ *     color: blue;
+ *   }
+ *   .if-browser-ie.v6 #toolbar {
+ *     display: none;
+ *   }
+ *    
+ * @author David Jeanmonod - Idael Sàrl - http://www.idael.ch
+ *
+ */
 class idlBrowserSpecificFilter extends sfFilter {
   
   public static $managedBrowsers = array(
@@ -11,12 +31,13 @@ class idlBrowserSpecificFilter extends sfFilter {
  
   public function execute($filterChain) { 
     
-    // Nothing to do before the action
+    // Forward to next filter, action will be done after action process
     $filterChain->execute();
     
-    // Explore the browser
+    // Init the Diam browser explorer
     $browser = new dmBrowser();
-    $browser->configureFromUserAgent($_SERVER['HTTP_USER_AGENT']);
+    $userAgent = $this->getContext()->getRequest()->getHttpHeader('User-Agent');
+    $browser->configureFromUserAgent($userAgent);
     
     // Create the css classes
     $newClasses = "";
@@ -26,20 +47,16 @@ class idlBrowserSpecificFilter extends sfFilter {
       $newClasses .= " v".$mainVersion[0];
     }
     
-    // Decorate the response with the browser version of the client
+    // If classes have been generated, try to add them to body
     if ($newClasses != "") {
-      
-    	// If there is a body tab in the response, add the browser class to it
       $response = $this->getContext()->getResponse();
+    	// If there is a body tab in the response, add the browser class to it
       if (preg_match("@<body([^>]*)>@", $response->getContent(), $match) ==1){
-	      $bodyParameters = $match[1];
-	      
+       $bodyParameters = $match[1];
 	      // Catch the potential existing class parameter
-	      $existingClasses = "";
-	      if (preg_match("@class\s*=\s*[\"']([^\"']*)[\"']@", $bodyParameters, $match) == 1) {
+ 	      if (preg_match("@class\s*=\s*[\"']([^\"']*)[\"']@", $bodyParameters, $match) == 1) {
 	        $classParam = $match[0];
 	        $existingClasses = $match[1];
-	        // Write down the new classes
 	        $bodyParameters = str_replace($classParam, "class='$existingClasses $newClasses'", $bodyParameters);
 	      }
 	      else {

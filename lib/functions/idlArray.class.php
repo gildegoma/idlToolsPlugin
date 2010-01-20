@@ -46,4 +46,15 @@ class idlArray extends idlFunction {
     }
     return $text."]";;
   }
+  
+  /**
+   * Extract a value from an array at the given key, or return the default value if the key doesn't exist
+   * @param array $array
+   * @param string $key
+   * @param mixed $default
+   * @return mixed
+   */
+  public static function get($array, $key, $default){
+  	return isset($array[$key]) ? $array[$key] : $default;
+  }
 }

@@ -36,8 +36,9 @@ abstract class idlArrayObject implements ArrayAccess{
         $this[$key] = $value;
       }
       catch (Exception $e){
+        $value = is_array($value) ? idlArray::toString($value, true) : $value;
         throw new Exception(
-          "Impossible to parse the key [$key], with the provided data: <<".idlArray::toString($value, true).">>.".
+          "Impossible to parse the key [$key], with the provided data: <<".$value.">>.".
           "Detail of the error: ".$e->getMessage()
         );
       }

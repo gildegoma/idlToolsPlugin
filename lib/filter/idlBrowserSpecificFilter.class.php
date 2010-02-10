@@ -23,7 +23,7 @@
 class idlBrowserSpecificFilter extends sfFilter {
   
   public static $managedBrowsers = array(
-    'msie' => 'ei',
+    'msie' => 'ie',
     'firefox' => 'ff',
     'safari' => 'saf',
     'chrome' => 'cr'

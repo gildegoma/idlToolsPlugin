@@ -57,4 +57,20 @@ class idlArray extends idlFunction {
   public static function get($array, $key, $default){
   	return isset($array[$key]) ? $array[$key] : $default;
   }
+  
+  /**
+   * Insert a value in an array at the given position
+   * @param Array $array the array where to insert the value
+   * @param Integer $pos the array index where to put the value
+   * @param unknown_type $val the value to insert
+   * @return Array the updated array
+   */
+  public static function arrayInsert($array,$pos,$val){
+    $array2 = array_splice($array,$pos);
+    $array[] = $val;
+    $array = array_merge($array,$array2);
+    return $array;
+  }
+  
+  
 }

@@ -36,35 +36,69 @@ class idlFile extends idlFunction {
     }
   }
   
+  
   /**
    * Copy a file or an url to a local file
-   * @param unknown_type $url
-   * @param unknown_type $dirname
-   * @param unknown_type $new_name
-   * @return boolean copy success
+   * @param string $source The source of the copy, can be a local path or an url
+   * @param string $dirPath The destination directory
+   * @param array $option :
+   *   * new_name : Use it to give an alternative name to the new file
+   *   * use_curl : Set it to true to use CURL for retrieved remote files
    */
-  public static function copyFile($source, $dirname, $new_name=""){
+  public static function copy($source, $dirPath, $options = array()) {
   
-    // If not a file, guest it's an url, so try to clean up
-    if ( ! is_file($source) ){
+    // Merge options with the default one
+    $options = array_merge(array(
+      'new_name' => '',
+      'use_curl' => false
+    ),$options);
+    
+    // Check if it's a file or an url
+    if ( is_file($source) ){
+      $options['use_curl'] = false;
+    }
+    else if ( strpos($source, "://") ){
       $source = idlUrl::cleanup($source);
     }
-    
-    // Proceed the copy
-    @$file = fopen ($source, "rb");
-    if ($file) {
-      $filename = basename($source);
-      $fc = fopen($dirname.DIRECTORY_SEPARATOR.($new_name != "" ? $new_name : $filename), "wb");
-      while (!feof ($file)) {
-        $line = fread ($file, 1028);
-        fwrite($fc,$line);
-      }
-      fclose($fc);
-    }
-    // Unable to open, throw an exception
     else {
+      throw new Exception("Invalid source provided: ".$source);
+    }
+    
+    // Try to open the source
+    if ( $options['use_curl'] ) {
+      $fileSource = curl_init($source);
+    }
+    else {
+      $fileSource = fopen ($source, "rb");
+    }
+    if ( ! $fileSource ) {
       throw new Exception("Impossible to open the file : $source");
     }
+    
+    // Create or edit the destination
+    $destFilename = idlArray::get($options, 'new_name', basename($source));
+    $destination = $dirPath.DIRECTORY_SEPARATOR.$destFilename;
+    $fileDestination = fopen($destination, "wb");
+    if ( ! $fileDestination) {
+      throw new Exception("Impossible to create or edit the file : $destination");
+    }
+    
+    // Make the copy
+    if ( $options['use_curl'] ){
+      curl_setopt($fileSource, CURLOPT_TIMEOUT, ini_get('default_socket_timeout'));
+      curl_setopt($fileSource, CURLOPT_FILE, $fileDestination);
+      curl_exec($fileSource);
+      curl_close($fileSource);
+    }
+    else {
+      while (!feof ($fileSource)) {
+        $data = fread ($fileSource, 1024);
+        fwrite($fileDestination, $data);
+      }
+      fclose($fileSource);  
+    }
+    fclose($fileDestination);
+    
   }
   
   /**

@@ -232,8 +232,8 @@ class idlFile extends idlFunction {
       //$this->log($command);
       return exec($command);
     } 
-    // XP require an executable
-    elseif ( idlServer::getOS() == "XP") {
+    // XP and SERVER_2003 require an executable
+    elseif ( in_array(idlServer::getOS(), array("XP", "SERVER_2003"))  ) {
       $command = sfConfig::get('sf_plugins_dir')."\idlToolsPlugin\bin\junction.exe $link $target";
       //$this->log($command);
       return exec($command);

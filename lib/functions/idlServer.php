@@ -13,6 +13,8 @@ class idlServer extends idlFunction {
       return "SEVEN";
     elseif ( (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "5.1") )
       return "XP";
+    elseif ( (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') && (php_uname('r') == "5.2") )
+      return "SERVER_2003";
     else
       return "UNKNOWN";
   }
@@ -23,7 +25,7 @@ class idlServer extends idlFunction {
    */
   public static function isWindows() {
   	$os = self::getOS();
-  	return $os == "VISTA" || $os == "SEVEN" || $os == "XP";
+  	return $os == "VISTA" || $os == "SEVEN" || $os == "XP" || $os == "SERVER_2003";
   }
   
   /**

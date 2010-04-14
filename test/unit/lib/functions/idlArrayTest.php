@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(2, new lime_output_color());
+$t = new lime_test(4, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -17,3 +17,9 @@ $arr1['sub'] = $arr1;
 $arr2['sub'] = $arr2;
 $arr3 = idlArray::merge($arr1, $arr2);
 $t->ok($arr3['sub']==$arrMerged, "merge() deep merge is working");
+
+
+// Test get of an existing value
+$t->ok(idlArray::get($arr1,'key1', 'toto')==1, "get() return the value if the key exist");
+$t->ok(idlArray::get($arr1,'key9', 'toto')=='toto', "get() return the default value when the key is absent");
+

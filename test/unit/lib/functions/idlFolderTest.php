@@ -1,8 +1,21 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-//include_once(dirname(__FILE__).'/../../../bootstrap/tempDir.php');
+include_once(dirname(__FILE__).'/../../../bootstrap/getTempDir.php');
 
-$t = new lime_test(0, new lime_output_color());
+$t = new lime_test(2, new lime_output_color());
 
-//idlFolder::create($tempDir.DIRECTORY_SEPARATOR.'toto');
+$newFolder = $tempDir.DIRECTORY_SEPARATOR.'toto';
+
+// Test folder creation 
+idlFolder::create($newFolder);
+$t->ok(is_dir($tempDir), "create() Folder creation is working");
+
+// Test that create on a existing path is failling
+try {
+  idlFolder::create($tempDir);
+  $t->fail("create() Not throwing on error if the folder already exist");
+}
+catch (Exception $e) {
+  $t->pass("create() Refuse to create on a existing path");
+}

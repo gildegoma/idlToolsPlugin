@@ -67,16 +67,24 @@ class idlArray extends idlFunction {
   
   /**
    * Insert a value in an array at the given position
-   * @param Array $array the array where to insert the value
-   * @param Integer $pos the array index where to put the value
-   * @param unknown_type $val the value to insert
-   * @return Array the updated array
+   * @param array $array  The array where to insert the value
+   * @param int   $pos    The position where to put the value
+   * @param mixed $val    The value to insert
+   * @return array        The updated array
    */
-  public static function arrayInsert($array,$pos,$val){
+  public static function insert($array,$pos,$val){
     $array2 = array_splice($array,$pos);
     $array[] = $val;
     $array = array_merge($array,$array2);
     return $array;
+  }
+  
+  /**
+   * @deprecated Use insert insted
+   * @see idlArray::insert
+   */
+  public static function arrayInsert($array,$pos,$val){
+    return self::insert($array,$pos,$val);
   }
   
   

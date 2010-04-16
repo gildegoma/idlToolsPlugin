@@ -88,4 +88,19 @@ class idlArray extends idlFunction {
   }
   
   
+  /**
+   * Return the last element of an array, without removing it from the array, and 
+   *  without moving the internal pointer
+   * @param array $array
+   * @return mixed
+   */
+  public static function getLast($array){
+    if (!is_array($array) || empty($array)){
+      throw new Exception("The provided variable is not an array with a value inside");
+    }
+    $keys = array_keys($array);
+    return $array[end($keys)];
+  }
+  
+  
 }

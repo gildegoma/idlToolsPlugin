@@ -11,8 +11,6 @@ $newFolder = $tempDir.DIRECTORY_SEPARATOR.'toto';
 idlFolder::create($newFolder);
 $t->ok(is_dir($tempDir), "create() Folder creation is working");
 
-$t->fail("Test fail");
-
 // Test that create on a existing path is failling
 try {
   idlFolder::create($tempDir);

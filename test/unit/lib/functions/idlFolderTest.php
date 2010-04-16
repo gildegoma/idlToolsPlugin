@@ -3,13 +3,15 @@
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
 include_once(dirname(__FILE__).'/../../../bootstrap/getTempDir.php');
 
-$t = new lime_test(2, new lime_output_color());
+$t = new lime_test(3, new lime_output_color());
 
 $newFolder = $tempDir.DIRECTORY_SEPARATOR.'toto';
 
 // Test folder creation 
 idlFolder::create($newFolder);
 $t->ok(is_dir($tempDir), "create() Folder creation is working");
+
+$t->fail("Test fail");
 
 // Test that create on a existing path is failling
 try {

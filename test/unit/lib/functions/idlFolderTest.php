@@ -3,7 +3,7 @@
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
 include_once(dirname(__FILE__).'/../../../bootstrap/getTempDir.php');
 
-$t = new lime_test(3, new lime_output_color());
+$t = new lime_test(2, new lime_output_color());
 
 $newFolder = $tempDir.DIRECTORY_SEPARATOR.'toto';
 

@@ -27,5 +27,54 @@ class idlFolder extends idlFunction {
     }
       
   }
+  
+  
+  /**
+   * Delete a directory and all of its contents.
+   *  Inspiered from the FileSystem.php from phing: 
+   *  /lib/symfony/vendor/phing/system/io/FileSystem.php
+   * 
+   * @param string $path Path of directory to delete.
+   */ 
+  public static function remove($dir){
+    global $php_errormsg; // Access to the error message
+        
+    $handle = @opendir($dir);
+    if (!$handle) {
+      throw new Exception("Cannot access directory [$dir]. $php_errormsg");
+    }
+
+    while (false !== ($entry = @readdir($handle))) {
+      
+      // Ignore . and ..
+      if ($entry == '.' || $entry == '..') continue;
+        
+      // Add / if it isn't already the last char.
+      if (strpos(strrev($dir), DIRECTORY_SEPARATOR) === 0) {
+        $next_entry = $dir . $entry;
+      } else {
+        $next_entry = $dir . DIRECTORY_SEPARATOR . $entry;
+      }
+      
+      // Remove element  
+      if (@is_dir($next_entry)) {
+        self::remove($next_entry);
+      }
+      else { 
+        if (false === @unlink($next_entry)) {
+          throw new Exception("Cannot remove [$next_entry]. $php_errormsg");
+        }
+      }
+      
+    }
+    @closedir($handle);
+    
+    // Remove itself
+    if (false === @rmdir($dir)) {
+      $msg = "Cannot remove directory $dir. ($php_errormsg)";
+      throw new Exception($msg);
+    }
+            
+  }
     
 }

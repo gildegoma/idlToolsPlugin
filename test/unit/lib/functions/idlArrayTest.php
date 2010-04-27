@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(13, new lime_output_color());
+$t = new lime_test(17, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -34,7 +34,6 @@ $t->ok(idlArray::insert(array(2,3),0,1)==array(1,2,3), "insert() Insert at the b
 $t->ok(idlArray::insert(array(1,3),1,2)==array(1,2,3), "insert() Insert in the middle");
 $t->ok(idlArray::insert(array(1,2),2,3)==array(1,2,3), "insert() Insert at the end");
 
-
 // Test the getLast
 $arr1 = $arr2 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $t->ok(idlArray::getLast($arr1)==3,"getLast() return the last value");
@@ -42,5 +41,16 @@ $t->ok($arr1==$arr2,"getLast() doesn't alter the array");
 try {idlArray::getLast(array()); $t->fail("getLast() accept empty array");}
 catch (Exception $e) {$t->pass("getLast() refuse empty array");}
 
-
-
+// Test the insertIn
+$arr = array('toto'=>2);
+idlArray::insertIn($arr,'tata',3);
+$t->ok($arr==array('toto'=>2, 'tata'=>array(3)),"insertIn() Insert in an array without the key, automatically create it");
+$arr = array('toto'=>array(2));
+idlArray::insertIn($arr,'toto',3);
+$t->ok($arr==array('toto'=>array(2,3)),"insertIn() Insert in an array with the key, happend it");
+$arr = array('toto'=>2);
+try {idlArray::insertIn($arr,'toto',3); $t->fail("insertIn() accept subkey that are not array");}
+catch (Exception $e) {$t->pass("insertIn() refuse subkey that are not array");}
+$arr = array('toto'=>array());
+idlArray::insertIn($arr,'toto',3,'tata');
+$t->ok($arr==array('toto'=>array('tata'=>3)),"insertIn() Allow to force the subkey");

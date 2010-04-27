@@ -103,4 +103,29 @@ class idlArray extends idlFunction {
   }
   
   
+  /**
+   * Insert a value in a sub array, if the sub array does exist, it's
+   *  automatically created 
+   * @param $array  Main array
+   * @param $key    The key of the sub array
+   * @param $value  The value to insert
+   * @param $subKey If provide, this will be the insertion key, by default it's
+   *                 only happend to the end
+   */
+  public static function insertIn(&$array, $key, $value, $subKey = null){
+    if (!isset($array[$key])){
+      $array[$key] = array();
+    }
+    if (!is_array($array[$key])){
+      throw new Exception("The key already exist, but it's not an array");
+    }
+    if ($subKey == null){
+      $array[$key][] = $value;
+    }
+    else {
+      $array[$key][$subKey] = $value;
+    } 
+  }
+  
+  
 }

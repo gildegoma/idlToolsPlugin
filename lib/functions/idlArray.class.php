@@ -105,7 +105,11 @@ class idlArray extends idlFunction {
   
   /**
    * Insert a value in a sub array, if the sub array does exist, it's
-   *  automatically created 
+   *  automatically created
+   * This call:
+   *   idlArray::insertIn($arr, 'key', $value, 'subKey')
+   * is equivalent to:
+   *   $arr = idlArray::merge($arr, array('key'=>array('subKey'=>$value)))
    * @param $array  Main array
    * @param $key    The key of the sub array
    * @param $value  The value to insert

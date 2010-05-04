@@ -22,7 +22,7 @@ class idlFolder extends idlFunction {
     umask($current_umask);
     
     // Throw an exception if the creation fail
-    if ( $result == false ){
+    if ( $result == false || ! is_dir($path) ){
       throw new Exception("Impossible to create the directory $path, please check the filesystem permissions.");
     }
       

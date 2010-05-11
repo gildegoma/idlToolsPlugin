@@ -118,27 +118,24 @@ class idlArray extends idlFunction {
    */
   public static function insertIn(&$array, $key, $value, $subKey = null){
     
-    // If key is an array, we recusively call the same function switch the key by one
-    if (is_array($key)){
-      if (count($key) == 1){
-        self::insertIn($array, reset($key), $value, $subKey);
-      }
-      else {
-        $currentKey = array_shift($key);
-        if (!isset($array[$currentKey])){
-          $array[$currentKey] = array();
-        }
-        self::insertIn($array[$currentKey], $key, $value, $subKey);
-      }
+    // Key can be an array, if it's not, let's put in
+    $keys = is_array($key) ? $key : array($key);
+    
+    // Check for first key
+    $key = array_shift($keys);
+    if (!isset($array[$key])){
+      $array[$key] = array();
     }
-    // Basic key, just do the insert
+    if (!is_array($array[$key])){
+      throw new Exception("The key '$key' already exist, but it's not an array");
+    }
+       
+    // If there is still keys we recusively call the same function switch the key by one
+    if (count($keys) > 0){
+      self::insertIn($array[$key], $keys, $value, $subKey);
+    }
+    // We do the insert
     else {
-      if (!isset($array[$key])){
-        $array[$key] = array();
-      }
-      if (!is_array($array[$key])){
-        throw new Exception("The key already exist, but it's not an array");
-      }
       if ($subKey == null){
         $array[$key][] = $value;
       }
@@ -147,6 +144,5 @@ class idlArray extends idlFunction {
       } 
     }
   }
-  
   
 }

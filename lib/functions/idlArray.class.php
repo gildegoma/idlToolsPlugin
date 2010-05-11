@@ -117,18 +117,35 @@ class idlArray extends idlFunction {
    *                 only happend to the end
    */
   public static function insertIn(&$array, $key, $value, $subKey = null){
-    if (!isset($array[$key])){
-      $array[$key] = array();
+    
+    // If key is an array, we recusively call the same function switch the key by one
+    if (is_array($key)){
+      if (count($key) == 1){
+        self::insertIn($array, reset($key), $value, $subKey);
+      }
+      else {
+        $currentKey = array_shift($key);
+        if (!isset($array[$currentKey])){
+          $array[$currentKey] = array();
+        }
+        self::insertIn($array[$currentKey], $key, $value, $subKey);
+      }
     }
-    if (!is_array($array[$key])){
-      throw new Exception("The key already exist, but it's not an array");
-    }
-    if ($subKey == null){
-      $array[$key][] = $value;
-    }
+    // Basic key, just do the insert
     else {
-      $array[$key][$subKey] = $value;
-    } 
+      if (!isset($array[$key])){
+        $array[$key] = array();
+      }
+      if (!is_array($array[$key])){
+        throw new Exception("The key already exist, but it's not an array");
+      }
+      if ($subKey == null){
+        $array[$key][] = $value;
+      }
+      else {
+        $array[$key][$subKey] = $value;
+      } 
+    }
   }
   
   

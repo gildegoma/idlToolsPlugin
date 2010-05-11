@@ -104,44 +104,51 @@ class idlArray extends idlFunction {
   
   
   /**
-   * Insert a value in a sub array, if the sub array does exist, it's
-   *  automatically created
-   * This call:
-   *   idlArray::insertIn($arr, 'key', $value, 'subKey')
-   * is equivalent to:
-   *   $arr = idlArray::merge($arr, array('key'=>array('subKey'=>$value)))
+   * Insert a value in a sub array
    * @param $array  Main array
-   * @param $key    The key of the sub array
+   * @param $keys   Accept a key or an array of keys. The key can be null, and so 
+   *                 the value is added to the end of the array
    * @param $value  The value to insert
-   * @param $subKey If provide, this will be the insertion key, by default it's
-   *                 only happend to the end
    */
-  public static function insertIn(&$array, $key, $value, $subKey = null){
+  public static function insertIn(&$array, $keys, $value){
     
     // Key can be an array, if it's not, let's put in
-    $keys = is_array($key) ? $key : array($key);
+    $keys = is_array($keys) ? $keys : array($keys);
     
-    // Check for first key
+    // Extract the first key
     $key = array_shift($keys);
-    if (!isset($array[$key])){
-      $array[$key] = array();
-    }
-    if (!is_array($array[$key])){
-      throw new Exception("The key '$key' already exist, but it's not an array");
-    }
-       
-    // If there is still keys we recusively call the same function switch the key by one
-    if (count($keys) > 0){
-      self::insertIn($array[$key], $keys, $value, $subKey);
-    }
-    // We do the insert
-    else {
-      if ($subKey == null){
-        $array[$key][] = $value;
+    
+    // If there is no more keys, insert the value
+    if (count($keys) == 0){
+      if ($key==null){
+        $array[] = $value;
       }
       else {
-        $array[$key][$subKey] = $value;
-      } 
+        if (isset($array[$key])){
+          throw new Exception("The key '$key' already exist, insert fail");
+        }
+        $array[$key] = $value;
+      }
+    }
+    
+    // Recursively insert inside a sub array
+    else {
+      if ($key==null){
+        $array[] = array();
+        end($array);
+        $key = key($array);
+      }
+      else {
+        if (isset($array[$key])){
+          if (!is_array($array[$key])){
+            throw new Exception("The key '$key' already exist, but it's not an array");
+          }
+        }
+        else {
+          $array[$key] = array();
+        }
+      }  
+      self::insertIn($array[$key], $keys, $value);
     }
   }
   

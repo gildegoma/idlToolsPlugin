@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(19, new lime_output_color());
+$t = new lime_test(21, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -44,20 +44,25 @@ catch (Exception $e) {$t->pass("getLast() refuse empty array");}
 // Test the insertIn
 $arr = array('toto'=>2);
 idlArray::insertIn($arr,'tata',3);
-$t->is($arr,array('toto'=>2, 'tata'=>array(3)),"insertIn() Insert in an array without the key, automatically create it");
-$arr = array('toto'=>array(2));
-idlArray::insertIn($arr,'toto',3);
-$t->is($arr,array('toto'=>array(2,3)),"insertIn() Insert in an array with the key, happend it");
+$t->is($arr,array('toto'=>2, 'tata'=>3),"insertIn() Insert in an array with a simple key");
 $arr = array('toto'=>2);
-try {idlArray::insertIn($arr,'toto',3); $t->fail("insertIn() accept subkey that are not array");}
+idlArray::insertIn($arr,null,3);
+$t->is($arr,array(0=>3,'toto'=>2),"insertIn() Insert in an array with the null key");
+$arr = array('toto'=>2);
+idlArray::insertIn($arr,array('tata','titi'),3);
+$t->is($arr,array('toto'=>2, 'tata'=>array('titi'=>3)),"insertIn() Insert in an array with two keys");
+$arr = array(0=>2);
+idlArray::insertIn($arr,array(null,null),3);
+$t->is($arr,array(0=>2, 1=>array(0=>3)),"insertIn() Insert in an array with a two null keys");
+$arr = array('toto'=>2);
+try {idlArray::insertIn($arr,'toto',3); $t->fail("insertIn() accept position that are already used");}
+catch (Exception $e) {$t->pass("insertIn() refuse position that are already used");}
+try {idlArray::insertIn($arr,array('toto', null),3); $t->fail("insertIn() accept subkey that are not an array");}
 catch (Exception $e) {$t->pass("insertIn() refuse subkey that are not array");}
-$arr = array('toto'=>array());
-idlArray::insertIn($arr,'toto',3,'tata');
-$t->is($arr,array('toto'=>array('tata'=>3)),"insertIn() Allow to force the subkey");
-// test the insertIn with a table of sub key
 $arr = array();
 idlArray::insertIn($arr,array('toto','tata'),3);
-$t->is($arr, array('toto'=>array('tata'=>array(3))),"insertIn() Allow provide a array of subkeys");
-idlArray::insertIn($arr,array('toto','tata','titi'),3);
-$t->is($arr, array('toto'=>array('tata'=>array(0=>3,'titi'=>array(3)))),"insertIn() Allow provide a array of subkeys");
+$t->is($arr, array('toto'=>array('tata'=>3)),"insertIn() Insert in an empty array");
+$arr = array();
+idlArray::insertIn($arr,array('toto','tata','titi', null),3);
+$t->is($arr, array('toto'=>array('tata'=>array('titi'=>array(3)))),"insertIn() Try with 4 levels of insert");
 

@@ -105,15 +105,15 @@ class idlArray extends idlFunction {
   
   /**
    * Insert a value in a sub array
-   * @param $array  Main array
-   * @param $keys   Accept a key or an array of keys. The key can be null, and so 
-   *                 the value is added to the end of the array
-   * @param $value  The value to insert
+   * @param $array      Main array
+   * @param $position   Accept a key or an array of keys. The key can be null, and so 
+   *                     the value is added to the end of the array
+   * @param $value      The value to insert
    */
-  public static function insertIn(&$array, $keys, $value){
+  public static function insertIn(&$array, $position, $value){
     
-    // Key can be an array, if it's not, let's put in
-    $keys = is_array($keys) ? $keys : array($keys);
+    // Position can be an array, if it's not, let's put in
+    $keys = is_array($position) ? $position : array($position);
     
     // Extract the first key
     $key = array_shift($keys);

@@ -163,11 +163,11 @@ class idlFile extends idlFunction {
   public static function __sendToClient($options){
       
     // Get mimetype if not define
-    if ($mimetype == "") {
-      $mimetype = self::guestMimeTypeFormFilename($options['filename']);
+    if (!isset($options['mimetype']) || $options['mimetype'] == "") {
+      $options['mimetype'] = self::guestMimeTypeFormFilename($options['filename']);
     }
     
-    sfContext::getInstance()->getLogger()->info("Start download of the file: {$options['filename']}, mimetype: $mimetype");
+    sfContext::getInstance()->getLogger()->info("Start download of the file: {$options['filename']}, mimetype: ".$options['mimetype']);
         
     // Browser detection
     if(preg_match("@Opera(/| )([0-9].[0-9]{1,2})@", $_SERVER['HTTP_USER_AGENT'], $resultats))
@@ -185,7 +185,7 @@ class idlFile extends idlFunction {
     $resp->setHttpHeader('Last-Modified', $now);
     $resp->setHttpHeader('Expires', $now); 
     $resp->setHttpHeader('Content-Description',"File Transfer");
-    $resp->setHttpHeader('Content-Type', $mimetype);
+    $resp->setHttpHeader('Content-Type', $options['mimetype']);
     $resp->setHttpHeader('Content-Transfer-Encoding', 'binary');
     $resp->setHttpHeader('Content-Length', $options['size']);
     

@@ -35,5 +35,14 @@ class idlString extends idlFunction {
     }
     return $ret;
   } 
+  
+    public static function convertUnderScoreToCssStyle($text){
+    
+    return "Todo";
+  } 
+  
+  
+  
+  
    
 }

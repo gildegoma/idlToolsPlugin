@@ -1,7 +1,16 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(6, new lime_output_color());
+$t = new lime_test(0, new lime_output_color());
+/*
+// Type detection
+$t->is(idlString::guestStringType('simple'), 'notype', "String type detection for simple string");
+$t->is(idlString::guestStringType('MyTestString'), 'camel', "String type detection for CamelCase");
+$t->is(idlString::guestStringType('myTestString'), 'camel', "String type detection for CamelCase");
+$t->is(idlString::guestStringType('my-test-string'), 'css', "String type detection for CSS");
+$t->is(idlString::guestStringType('my_test_string'), 'underscore', "String type detection for Underscored");
+
+
 
 $t->is(idlString::convertCamelizedToCssStyle('MyTestString'), "my-test-string", "->convertCamelizedToCssStyle() : Camelize string starting by an uppercase");
 $t->is(idlString::convertCamelizedToCssStyle('myTestString'), "my-test-string", "->convertCamelizedToCssStyle() : Camelize string starting by a lowercase");
@@ -15,3 +24,4 @@ $t->is(idlString::convertUnderScoreToCssStyle('my_test_string'), "my-test-string
 $t->is(idlString::convertUnderScoreToCssStyle('my_string'), "my-t-string", "->convertUnderScoreToCssStyle() : Underscore with two underscore");
 try{idlString::convertUnderScoreToCssStyle("_my_string"); $t->fail("->convertUnderScoreToCssStyle: must not accept string that's start with underscore");}
 catch (Exception $e){$t->pass("->convertUnderScoreToCssStyle: refuse string that start with under score");}
+*/

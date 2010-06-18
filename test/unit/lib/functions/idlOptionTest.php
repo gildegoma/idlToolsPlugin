@@ -6,12 +6,12 @@ $t = new lime_test(3, new lime_output_color());
 $default = array('op1' => 1, 'op2' => 2, 'op3' => 3);
 
 // Test basic merge
-$merged = idlOption::merge($default, array('op3'=>4));
+$merged = idlOption::merge(array('op3'=>4), $default);
 $t->ok($merged['op3']==4, "merge() Allow to override default option");
 
 // Test the extra option refused
 try {
-  idlOption::merge($default, array('op4'=>4));
+  idlOption::merge(array('op4'=>4), $default);
   $t->fail("merge() Accept a none default option");
 }
 catch (Exception $e) {
@@ -20,7 +20,7 @@ catch (Exception $e) {
 
 // Test the extra option accepted due to the allow params
 try {
-  idlOption::merge($default, array('op4'=>4),array('op4'));
+  idlOption::merge(array('op4'=>4), $default, array('op4'));
   $t->pass("merge() Accept a none default option if it has been explicitely describe in the allow param ");
 }
 catch (Exception $e) {

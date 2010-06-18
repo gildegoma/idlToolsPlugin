@@ -10,16 +10,16 @@ class idlOption extends idlFunction {
    * @param $new      New options
    * @param $allows   Allowed options
    */
-  public static function merge($defaults, $new, $allows = null){
+  public static function merge($options, $defaults, $allows = null){
     // Check if they are all allow
     if ($allows == null)
       $allows = array_keys($defaults);
-    $unautorized = array_diff(array_keys($new), $allows);
+    $unautorized = array_diff(array_keys($options), $allows);
     if (count($unautorized) > 0) {
       throw new Exception("Options ".idlArray::toString($unautorized)." are not allow.");
     }
     // Return the merge options
-    return idlArray::merge($defaults, $new);
+    return idlArray::merge($defaults, $options);
   }
    
   

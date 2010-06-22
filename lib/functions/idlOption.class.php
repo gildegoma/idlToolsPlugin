@@ -11,13 +11,21 @@ class idlOption extends idlFunction {
    * @param $allows   Allowed options
    */
   public static function merge($options, $defaults, $allows = null){
-    // Check if they are all allow
-    if ($allows == null)
+    
+    // Construc the allow keys with the defaults keys and the provided
+    if ($allows == null) {
       $allows = array_keys($defaults);
+    }
+    else {
+      $allows = array_merge(array_keys($defaults), $allows); 
+    }
+    
+    // Check for unautorized
     $unautorized = array_diff(array_keys($options), $allows);
     if (count($unautorized) > 0) {
       throw new Exception("Options ".idlArray::toString($unautorized)." are not allow.");
     }
+    
     // Return the merge options
     return idlArray::merge($defaults, $options);
   }

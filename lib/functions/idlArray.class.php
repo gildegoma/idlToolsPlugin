@@ -152,4 +152,22 @@ class idlArray extends idlFunction {
     }
   }
   
+  /**
+   * Remove all the specified values from the given array
+   * @param array $array
+   * @param mixed $values
+   * @return array
+   */
+  public static function removeValues($array, $values){
+    if (!is_array($values)){
+      $values = array($values);
+    }
+    foreach ($array as $key => $value){
+      if (in_array($value, $values)){
+        unset($array[$key]);
+      }
+    }
+    return $array;
+  }
+  
 }

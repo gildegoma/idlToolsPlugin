@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(25, new lime_output_color());
+$t = new lime_test(26, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -21,6 +21,8 @@ $t->ok($arr3['sub']==$arrMerged, "merge() deep merge is working");
 // Test get value method
 $t->ok(idlArray::get($arr1,'key1', 'toto')==1, "get() return the value if the key exist");
 $t->ok(idlArray::get($arr1,'key9', 'toto')=='toto', "get() return the default value when the key is absent");
+try {idlArray::get($arr1,'key9'); $t->fail("get() Accept invalid key without default value");}
+catch (Exception $e) {$t->pass("get() Refuse invalid key without default define");}
 
 // Test of the toString function
 $t->ok(idlArray::toString($arr1)=="[1,2,3,[1,2,3]]", "toString() convert an array without key is working");

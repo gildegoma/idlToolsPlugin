@@ -56,13 +56,21 @@ class idlArray extends idlFunction {
   
   /**
    * Extract a value from an array at the given key, or return the default value if the key doesn't exist
+   * If no default value are provide, the method could return an exception
    * @param array $array
    * @param string $key
    * @param mixed $default
    * @return mixed
    */
-  public static function get($array, $key, $default){
-  	return isset($array[$key]) ? $array[$key] : $default;
+  public static function get($array, $key, $default = null){
+    if ( !is_array($array) && ! $array instanceof ArrayAccess  )
+      throw new Exception("Array must be provide in idlArray::get()");
+    if ( isset($array[$key]) )
+      return $array[$key];
+    elseif ( isset($default) )
+      return $default;
+    else
+      throw new Exception("There is no key [$key] in the requested array:".idlArray::toString($array, true));
   }
   
   /**

@@ -10,6 +10,7 @@ class idlLogger {
   private static $singleton;
   private $logger;
   private $logPrefix;
+  private $dispatcherForTest;
   
   // Private constructor as it's a singleton
   private function __construct(){
@@ -49,10 +50,15 @@ class idlLogger {
   public function log($msg, $type){
     
     // If no intenal logger define, just return
-    if (!isset($this->logger)) return;
+    if (!isset($this->logger) && !isset($this->dispatcherForTest)) return;
     
     switch ($type) {
     case self::DEV:
+      if ( sfConfig::get('sf_environment', 'prod') =='test' && isset($this->dispatcherForTest) ) {
+        $message = "IDL DEV LOG: $msg";
+        $this->dispatcherForTest->notify(new sfEvent($this, 'command.log', array($message)));
+        return;
+      }
       if ( sfConfig::get('sf_environment', 'prod') !='dev' ) {
         return; 
       }
@@ -71,6 +77,10 @@ class idlLogger {
     
     $this->logger->log($this->logPrefix.$msg, $sfLoggerPriority);
     
+  }
+  
+  public function startLogOnTest($dispatcher){
+    $this->dispatcherForTest = $dispatcher;
   }
     
 }

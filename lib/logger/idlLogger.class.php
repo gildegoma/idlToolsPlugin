@@ -59,11 +59,12 @@ class idlLogger {
     // For test context, log the DEV log to the console
     if ( sfConfig::get('sf_environment', 'prod') =='test' && $type == self::DEV) {
       $this->logOnConsole($msg);
-      return;
     }
     
     // If no intenal logger define, just return
-    if (!isset($this->logger)) return;
+    if (!isset($this->logger)) {
+      return; 
+    }
     
     switch ($type) {
     case self::DEV:

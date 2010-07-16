@@ -10,14 +10,21 @@ class idlLogger {
   private static $singleton;
   private $logger;
   private $logPrefix;
-  private $dispatcherForTest;
+  private $testOutput; 
   
   // Private constructor as it's a singleton
   private function __construct(){
+    
+    // Try to retrieved the standard logger
     if (class_exists('sfContext') && sfContext::hasInstance()){
       $this->logger = sfContext::getInstance()->getLogger();
     }
-    $this->logPrefix = 'IDL: '; // TODO Should be configurable from the app.yml 
+    
+    // Define a log prefix
+    $this->logPrefix = 'IDL'; // TODO Should be configurable from the app.yml
+    
+    // Define the standard console output
+    $this->testOutput = defined('STDOUT') ? STDOUT : fopen('php://stdout', 'w'); 
   }
   
   public static function getInstance(){
@@ -49,16 +56,17 @@ class idlLogger {
   
   public function log($msg, $type){
     
+    // For test context, log the DEV log to the console
+    if ( sfConfig::get('sf_environment', 'prod') =='test' && $type == self::DEV) {
+      $this->logOnConsole($msg);
+      return;
+    }
+    
     // If no intenal logger define, just return
-    if (!isset($this->logger) && !isset($this->dispatcherForTest)) return;
+    if (!isset($this->logger)) return;
     
     switch ($type) {
     case self::DEV:
-      if ( sfConfig::get('sf_environment', 'prod') =='test' && isset($this->dispatcherForTest) ) {
-        $message = "IDL DEV LOG: $msg";
-        $this->dispatcherForTest->notify(new sfEvent($this, 'command.log', array($message)));
-        return;
-      }
       if ( sfConfig::get('sf_environment', 'prod') !='dev' ) {
         return; 
       }
@@ -75,12 +83,21 @@ class idlLogger {
       break;
     }
     
-    $this->logger->log($this->logPrefix.$msg, $sfLoggerPriority);
+    $this->logger->log($this->formatMessage($msg), $sfLoggerPriority);
     
   }
   
-  public function startLogOnTest($dispatcher){
-    $this->dispatcherForTest = $dispatcher;
+  protected function formatMessage($msg){
+    return $this->logPrefix . ': ' . $msg;
+  } 
+  
+  
+  /**
+   * Log on console
+   */
+  public function logOnConsole($msg) {
+    fwrite($this->testOutput, $this->formatMessage($msg).PHP_EOL);
+    flush();
   }
     
 }

@@ -49,7 +49,15 @@ class idlArray extends idlFunction {
         $text .= $key . "=>";
       }
       // Add the value ( this is recusive if need)
-      $text .= (is_array($value) ? self::toString($value, $withKey) : $value);
+      if (is_array($value)){
+        $text .= self::toString($value, $withKey);
+      }
+      elseif (is_string($value)) {
+        $text .= '"'.$value.'"';
+      }
+      else {
+        $text .= $value;
+      }
     }
     return $text."]";;
   }

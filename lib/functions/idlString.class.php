@@ -10,7 +10,7 @@ class idlString extends idlFunction {
   public static function camelize($text){
     $type = self::guestStringType($text);
     if ($type == 'invalid'){
-      throw new Exception("Impossible to convert string [$text] to css style");
+      throw new Exception("Impossible to convert string [$text] to camelize style");
     } 
     else if ($type == 'notype'){
       return ucfirst($text);

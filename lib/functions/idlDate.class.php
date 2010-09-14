@@ -8,7 +8,8 @@ class idlDate extends idlFunction {
 	 * @return integer
 	 */
 	public static function toTS($date){
-		return strtotime($date);    
+	  $date = new DateTime($date);
+		return $date->format('U');    
 	}
 
 }

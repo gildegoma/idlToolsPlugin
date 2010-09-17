@@ -10,7 +10,7 @@ class idlOption extends idlFunction {
    * @param $new      New options
    * @param $allows   Allowed options
    */
-  public static function merge($options, $defaults, $allows = null){
+  public static function merge(array $options, array $defaults, array $allows = null){
     
     // Construc the allow keys with the defaults keys and the provided
     if ($allows == null) {

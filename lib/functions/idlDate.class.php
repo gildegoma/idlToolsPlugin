@@ -10,8 +10,8 @@ class idlDate extends idlFunction {
    * @param string $date date
 	 * @return string|int
 	 */
-	public static function toTS($date, $useInt=false){
-	  $date = new DateTime($date);
+	public static function toTS($dateStr, $useInt=false){
+	  $date = new DateTime($dateStr);
 	  // Return as a string
 	  if ($useInt==false){
 		  return $date->format('U');
@@ -20,7 +20,7 @@ class idlDate extends idlFunction {
 	  $strVal = $date->format('U');
 	  $PHP_INT_MIN = (int)(PHP_INT_MAX+1);
 	  if ($strVal > PHP_INT_MAX || $strVal < $PHP_INT_MIN){
-	    throw new Exception("Impossible to convert the date $date in integer timestamp, as the current system limitations are reach");
+	    throw new Exception("Impossible to convert the date $dateStr in integer timestamp, as the current system limitations are reach");
 	  }
     return (int) $date->format('U');
 	}

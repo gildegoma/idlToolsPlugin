@@ -128,5 +128,24 @@ class idlString extends idlFunction {
     return self::cssify($text);
   }   
   
+  /**
+   * Append a new part toi an existing string, using the provided separator
+   * @param string $fullString
+   * @param string $newPart
+   * @param string $separator
+   * @return string
+   */
+  public static function append($fullString, $newPart, $separator=', '){
+    if (strlen($fullString)==0){
+      return $newPart;
+    }
+    elseif (strlen($newPart)==0){
+      return $fullString;
+    }
+    else {
+      return $fullString.$separator.$newPart;
+    }
+  }
+  
    
 }

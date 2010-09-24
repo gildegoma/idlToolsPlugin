@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(35, new lime_output_color());
+$t = new lime_test(40, new lime_output_color());
 
 // Type detection
 $t->is(idlString::guestStringType('simple'), 'untyped', "->guestStringType() String type detection for simple string");
@@ -52,4 +52,12 @@ $t->is(idlString::convertCamelizedToCssStyle('String'), "string", "->convertCame
 $t->is(idlString::convertCamelizedToCssStyle('string'), "string", "->convertCamelizedToCssStyle() : String with only lowercase"); 
 try{idlString::convertCamelizedToCssStyle("MyString:Test24;"); $t->fail("->convertCamelizedToCssStyle() : must not accept illegal chars!");} 
 catch (Exception $e){$t->pass("->convertCamelizedToCssStyle() : raise an Exception when not allowed characters are used");} 
+
+
+// Test of the append function
+$t->is(idlString::append('', 'toto'),          "toto",            "->append() : First call just return the value"); 
+$t->is(idlString::append('toto', 'tata'),      "toto, tata",      "->append() : Second call add a separator and the new value");
+$t->is(idlString::append('toto, tata', 'titi'),"toto, tata, titi","->append() : Third call add a separator and the new value"); 
+$t->is(idlString::append('toto', ''),          "toto",            "->append() : If the new value is empty, nothing is happend"); 
+$t->is(idlString::append('toto', 'tata', ':'), "toto:tata",       "->append() : Separator can be overhide"); 
 

@@ -55,6 +55,12 @@ class idlArray extends idlFunction {
       elseif (is_string($value)) {
         $text .= '"'.$value.'"';
       }
+      elseif (is_object($value)) {
+        $text .= 'object('.get_class($value).')';
+      }
+      elseif ($value == null) {
+        $text .= 'null';
+      }
       else {
         $text .= $value;
       }

@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(26, new lime_output_color());
+$t = new lime_test(30, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -25,8 +25,13 @@ try {idlArray::get($arr1,'key9'); $t->fail("get() Accept invalid key without def
 catch (Exception $e) {$t->pass("get() Refuse invalid key without default define");}
 
 // Test of the toString function
-$t->ok(idlArray::toString($arr1)=="[1,2,3,[1,2,3]]", "toString() convert an array without key is working");
-$t->ok(idlArray::toString($arr1, true)=="[key1=>1,key2=>2,key3=>3,sub=>[key1=>1,key2=>2,key3=>3]]", "toString() convert an array with key is working");
+$t->is(idlArray::toString($arr1), "[1,2,3,[1,2,3]]", "toString() convert an array without key is working");
+$t->is(idlArray::toString($arr1, true), "[key1=>1,key2=>2,key3=>3,sub=>[key1=>1,key2=>2,key3=>3]]", "toString() convert an array with key is working");
+$t->is(idlArray::toString(array(2)),'[2]', "toString() convert an array with integer in appropriate format");
+$t->is(idlArray::toString(array("deux")),'["deux"]', "toString() convert an array with string in appropriate format");
+$t->is(idlArray::toString(array(null)),"[null]", "toString() convert an array with NULL in appropriate format");
+$t->is(idlArray::toString(array(new Exception(""))),"[object(Exception)]", "toString() convert an array with object in appropriate format");
+
 
 try {idlArray::toString("toto"); $t->fail("toString() Accept a string insteat of an array");}
 catch (Exception $e) {$t->pass("toString() Refuse to convert a string");}

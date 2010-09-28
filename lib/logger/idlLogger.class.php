@@ -10,7 +10,7 @@ class idlLogger {
   private static $singleton;
   private $logger;
   private $logPrefix;
-  private $testOutput; 
+  private $consoleOutput = null; 
   
   // Private constructor as it's a singleton
   private function __construct(){
@@ -23,8 +23,10 @@ class idlLogger {
     // Define a log prefix
     $this->logPrefix = 'IDL'; // TODO Should be configurable from the app.yml
     
-    // Define the standard console output
-    $this->testOutput = defined('STDOUT') ? STDOUT : fopen('php://stdout', 'w'); 
+    // Define the standard console output, when we are in cli mode
+    if (!isset($_SERVER['HTTP_HOST'])){
+      $this->consoleOutput = defined('STDOUT') ? STDOUT : fopen('php://stdout', 'w');
+    } 
   }
   
   public static function getInstance(){
@@ -61,9 +63,9 @@ class idlLogger {
   
   public function log($msg, $type){
     
-    // For test context, log the DEV log to the console
-    if ( sfConfig::get('sf_environment', 'prod') =='test' && $type == self::DEV) {
-      $this->logOnConsole($msg);
+    // For dev context, log the DEV log to the console
+    if ( $type == self::DEV) {
+      $this->tryToLogOnConsole($msg);
     }
     
     // If no intenal logger define, just return
@@ -101,9 +103,11 @@ class idlLogger {
   /**
    * Log on console
    */
-  public function logOnConsole($msg) {
-    fwrite($this->testOutput, $this->formatMessage($msg).PHP_EOL);
-    flush();
+  public function tryToLogOnConsole($msg) {
+    if (isset($this->consoleOutput)){
+      fwrite($this->consoleOutput, $this->formatMessage($msg).PHP_EOL);
+      flush();
+    }
   }
     
 }

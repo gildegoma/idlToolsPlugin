@@ -42,8 +42,8 @@ class idlLogger {
   }
   
   // To fast log dev ARRAY, should not perssite after dev phase finalize 
-  public static function devA($msg){
-    self::dev(idlArray::toString($msg, true), self::DEV);
+  public static function devA($array, $msgPrefix = ""){
+    self::dev($msgPrefix.idlArray::toString($array, true), self::DEV);
   }
   
   // To log message that will be availliable only on debug mode

@@ -25,6 +25,7 @@ class idlLogger {
     
     // Define the standard console output, when we are in cli mode
     if (!isset($_SERVER['HTTP_HOST'])){
+      // TODO, also log when functionnal test
       $this->consoleOutput = defined('STDOUT') ? STDOUT : fopen('php://stdout', 'w');
     } 
   }

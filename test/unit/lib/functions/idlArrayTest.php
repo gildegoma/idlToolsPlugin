@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
-$t = new lime_test(30, new lime_output_color());
+$t = new lime_test(33, new lime_output_color());
 
 $arr1 = array('key1' => 1, 'key2' => 2, 'key3' => 3);
 $arr2 = array('key2' => 4);
@@ -80,5 +80,12 @@ $t->is(idlArray::removeValues($arr, '0'), array(1=>'one', '2'=>'two', 'one'), "-
 $t->is(idlArray::removeValues($arr, array('0','two')), array(1=>'one', 3=>'one'), "->removeValues() Remove a two values");
 $t->is(idlArray::removeValues($arr, 'one'), array(0=>'0', '2'=>'two'), "->removeValues() Remove a single value present two times");
 $t->is(idlArray::removeValues($arr, array('0','one')), array('2'=>'two'), "->removeValues() Remove a two values, with one present two times");
+
+
+// Test around isArray()
+$t->is(idlArray::isArray("string"), false, "->isArray() Return false for string");
+$t->is(idlArray::isArray(array(1,2)), true, "->isArray() Return true for array");
+$t->is(idlArray::isArray(new sfOutputEscaperArrayDecorator('esc_raw', array(1,2))), true, "->isArray() Return true for ArrayAccess object");
+
 
 

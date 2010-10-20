@@ -35,7 +35,7 @@ class idlArray extends idlFunction {
   public static function toString($array, $withKey = false){
 
   	// Treat only array
-  	if ( ! isset($array) || ! is_array($array))
+  	if ( !self::isArray($array) )
   	  throw new Exception("The function idlArray::toString required an array as first parameter");
   	
     $text = "[";
@@ -49,7 +49,7 @@ class idlArray extends idlFunction {
         $text .= $key . "=>";
       }
       // Add the value ( this is recusive if need)
-      if (is_array($value)){
+      if (self::isArray($value)){
         $text .= self::toString($value, $withKey);
       }
       elseif (is_string($value)) {
@@ -77,7 +77,7 @@ class idlArray extends idlFunction {
    * @return mixed
    */
   public static function get($array, $key, $default = null){
-    if ( !is_array($array) && ! $array instanceof ArrayAccess  )
+    if ( !self::isArray($array)  )
       throw new Exception("Array must be provide in idlArray::get()");
     if ( isset($array[$key]) )
       return $array[$key];
@@ -162,7 +162,7 @@ class idlArray extends idlFunction {
       }
       else {
         if (isset($array[$key])){
-          if (!is_array($array[$key])){
+          if (!self::isArray($array[$key])){
             throw new Exception("The key '$key' already exist, but it's not an array");
           }
         }
@@ -181,7 +181,7 @@ class idlArray extends idlFunction {
    * @return array
    */
   public static function removeValues($array, $values){
-    if (!is_array($values)){
+    if (!self::isArray($values)){
       $values = array($values);
     }
     foreach ($array as $key => $value){
@@ -190,6 +190,15 @@ class idlArray extends idlFunction {
       }
     }
     return $array;
+  }
+  
+  /**
+   * The traditionnal function is_array is retruning false when we test an object with ArrayAccess interface
+   *  this one, accept ArrayAccess interface, so accept also sfOutputEscaperArrayDecorator
+   * @param mixed any $var
+   */
+  public static function isArray($var){
+    return is_array($var) || $var instanceof ArrayAccess;
   }
   
 }

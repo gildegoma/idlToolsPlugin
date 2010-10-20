@@ -34,10 +34,11 @@ class idlArray extends idlFunction {
    */
   public static function toString($array, $withKey = false){
 
-  	// Treat only array
-  	if ( !self::isArray($array) )
-  	  throw new Exception("The function idlArray::toString required an array as first parameter");
-  	
+    // Treat only array
+    if ( !self::isArray($array) ) {
+      throw new Exception("The function idlArray::toString required an array as first parameter");
+    }
+    
     $text = "[";
     foreach ($array as $key => $value){
       // Add a value separator
@@ -56,7 +57,11 @@ class idlArray extends idlFunction {
         $text .= '"'.$value.'"';
       }
       elseif (is_object($value)) {
-        $text .= 'object('.get_class($value).')';
+        $text .= 'object{'.get_class($value);
+        if (method_exists($value, '__toString')){
+          $text .= '('.$value.')';
+        }
+        $text .= '}';
       }
       elseif ($value == null) {
         $text .= 'null';

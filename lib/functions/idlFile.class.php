@@ -1,26 +1,40 @@
 <?php
 
 class idlFile extends idlFunction {
-	
-	/**
-	 * Extract extention for a filename
-	 * @param string $filename
-	 * @return string
-	 */
-	public static function getExtention($filename){
+  
+  /**
+   * Extract extention for a filename
+   * @param string $filename
+   * @return string
+   */
+  public static function getExtention($filename){
     preg_match("@.*\.([^\.]*)@", $filename, $match);
-    return $match[1];
-	}
-	
-	/**
-	 * Try to guest the mimetype of a file by checking is extention
-	 * @param string $filename
-	 * @return string
-	 */
-	public static function guestMimeTypeFormFilename($filename){
-		
-		// Read extention
-	  $extension=strToLower(idlFile::getExtention($filename));
+    return isset($match[1]) ? $match[1] : '';
+  }
+  
+  /**
+   * Remove extension for a filename
+   * @param string $filename
+   * @return string
+   */
+  public static function removeExtension($filename){
+    $ext = self::getExtention($filename);
+    if ( strlen($ext)>0 ) {
+      return (substr($filename, 0, strlen($filename)-strlen($ext)-1));
+    }
+    return $filename;
+  }
+  
+  
+  /**
+   * Try to guest the mimetype of a file by checking is extention
+   * @param string $filename
+   * @return string
+   */
+  public static function guestMimeTypeFormFilename($filename){
+    
+    // Read extention
+    $extension=strToLower(idlFile::getExtention($filename));
     
     // Compare to list
     // TODO cache the list for multiple call
@@ -31,7 +45,7 @@ class idlFile extends idlFunction {
       return $extentionList[$extension]['mime'];
     }
     else {
-    	// Default extension
+      // Default extension
       return 'application/octet-stream';
     }
   }

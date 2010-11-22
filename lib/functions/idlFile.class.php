@@ -31,23 +31,17 @@ class idlFile extends idlFunction {
    * @param string $filename
    * @return string
    */
+  public static function guestMimeTypeFromFilename($filename){
+    $extension = self::getExtention($filename);
+    return idlMimetype::getFromExtention($extension);
+  }
+  
+  /**
+   * @deprecated Use guestMimeTypeFromFilename() insted
+   * @see idlArray::guestMimeTypeFromFilename
+   */
   public static function guestMimeTypeFormFilename($filename){
-    
-    // Read extention
-    $extension=strToLower(idlFile::getExtention($filename));
-    
-    // Compare to list
-    // TODO cache the list for multiple call
-    $extentionList=sfYaml::load(sfConfig::get('sf_plugins_dir').DIRECTORY_SEPARATOR.
-      'idlToolsPlugin'.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'mimetype.yml');
-    $extentionList = $extentionList['extension'];
-    if(array_key_exists($extension, $extentionList)){ 
-      return $extentionList[$extension]['mime'];
-    }
-    else {
-      // Default extension
-      return 'application/octet-stream';
-    }
+    return self::guestMimeTypeFromFilename($filename);
   }
   
   

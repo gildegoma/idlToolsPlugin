@@ -1,6 +1,6 @@
 extension:
   dwg:
-    desc:     "Fichiers AutoCAD (d'aprs NCSA)"
+    desc:     "Fichiers AutoCAD (d'aprï¿½s NCSA)"
     mime:     application/acad
   asd:
     desc:     "Fichiers Astound"
@@ -12,7 +12,7 @@ extension:
     desc:     "Fichiers TSP"
     mime:     application/dsptype
   dxf:
-    desc:     "Fichiers AutoCAD (d'aprs CERN)"
+    desc:     "Fichiers AutoCAD (d'aprï¿½s CERN)"
     mime:     application/dxf
   spl:
     desc:     "Fichiers Flash Futuresplash"
@@ -63,19 +63,19 @@ extension:
     desc:     "Fichiers Microsoft Word"
     mime:     application/msword
   bin:
-    desc:     "Fichiers excutables"
+    desc:     "Fichiers exï¿½cutables"
     mime:     application/octet-stream
   exe:
-    desc:     "Fichiers excutables"
+    desc:     "Fichiers exï¿½cutables"
     mime:     application/octet-stream
   com:
-    desc:     "Fichiers excutables"
+    desc:     "Fichiers exï¿½cutables"
     mime:     application/octet-stream
   dll:
-    desc:     "Fichiers excutables"
+    desc:     "Fichiers exï¿½cutables"
     mime:     application/octet-stream
   class:
-    desc:     "Fichiers excutables"
+    desc:     "Fichiers exï¿½cutables"
     mime:     application/octet-stream
   oda:
     desc:     "Fichiers Oda"
@@ -150,7 +150,7 @@ extension:
     desc:     "Fichiers PHP"
     mime:     application/x-httpd-php
   js:
-    desc:     "Fichiers JavaScript c™t serveur"
+    desc:     "Fichiers JavaScript cï¿½tï¿½ serveur"
     mime:     application/x-javascript
   latex:
     desc:     "Fichiers source Latex"
@@ -320,6 +320,9 @@ extension:
   jpe:
     desc:     "Fichiers JPEG"
     mime:     image/jpeg
+  png:
+    desc:     "Fichiers PNG"
+    mime:     image/png
   tiff:
     desc:     "Fichiers TIFF"
     mime:     image/tiff
@@ -369,7 +372,7 @@ extension:
     desc:     "Visualisation de mondes virtuels"
     mime:     model/vrml
   csv:
-    desc:     "Fichiers de donnes spares par des virgules"
+    desc:     "Fichiers de donnï¿½es sï¿½parï¿½es par des virgules"
     mime:     text/comma-separated-values
   css:
     desc:     "Fichiers de feuilles de style CSS"
@@ -396,7 +399,7 @@ extension:
     desc:     "Fichiers Microsoft RTF"
     mime:     text/rtf
   tsv:
-    desc:     "Fichiers de donnes spares par des tabulations"
+    desc:     "Fichiers de donnï¿½es sï¿½parï¿½es par des tabulations"
     mime:     text/tab-separated-values
   wml:
     desc:     "Fichiers WML (WAP)"

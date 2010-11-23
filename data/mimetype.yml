@@ -1,6 +1,6 @@
 extension:
   dwg:
-    desc:     "Fichiers AutoCAD (d'apr�s NCSA)"
+    desc:     "Fichiers AutoCAD (d'après NCSA)"
     mime:     application/acad
   asd:
     desc:     "Fichiers Astound"
@@ -12,7 +12,7 @@ extension:
     desc:     "Fichiers TSP"
     mime:     application/dsptype
   dxf:
-    desc:     "Fichiers AutoCAD (d'apr�s CERN)"
+    desc:     "Fichiers AutoCAD (d'après CERN)"
     mime:     application/dxf
   spl:
     desc:     "Fichiers Flash Futuresplash"
@@ -62,20 +62,35 @@ extension:
   dot:
     desc:     "Fichiers Microsoft Word"
     mime:     application/msword
+  docx:
+    desc:     "Fichiers Microsoft Word 2007"
+    mime:     application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  dotx:
+    desc:     "Fichiers Microsoft Word 2007"
+    mime:     application/vnd.openxmlformats-officedocument.wordprocessingml.template
+  xlsx:
+    desc:     "Fichier Microsoft Excel 2007"
+    mime:     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  xltx:
+    desc:     "Fichier Microsoft Excel 2007"
+    mime:     application/vnd.openxmlformats-officedocument.spreadsheetml.template
+  pptx:
+    desc:     "Fichier Microsoft Powerpoint 2007"
+    mime:     application/vnd.openxmlformats-officedocument.presentationml.presentation    
   bin:
-    desc:     "Fichiers ex�cutables"
+    desc:     "Fichiers exécutables"
     mime:     application/octet-stream
   exe:
-    desc:     "Fichiers ex�cutables"
+    desc:     "Fichiers exécutables"
     mime:     application/octet-stream
   com:
-    desc:     "Fichiers ex�cutables"
+    desc:     "Fichiers exécutables"
     mime:     application/octet-stream
   dll:
-    desc:     "Fichiers ex�cutables"
+    desc:     "Fichiers exécutables"
     mime:     application/octet-stream
   class:
-    desc:     "Fichiers ex�cutables"
+    desc:     "Fichiers exécutables"
     mime:     application/octet-stream
   oda:
     desc:     "Fichiers Oda"
@@ -150,7 +165,7 @@ extension:
     desc:     "Fichiers PHP"
     mime:     application/x-httpd-php
   js:
-    desc:     "Fichiers JavaScript c�t� serveur"
+    desc:     "Fichiers JavaScript côté serveur"
     mime:     application/x-javascript
   latex:
     desc:     "Fichiers source Latex"
@@ -372,7 +387,7 @@ extension:
     desc:     "Visualisation de mondes virtuels"
     mime:     model/vrml
   csv:
-    desc:     "Fichiers de donn�es s�par�es par des virgules"
+    desc:     "Fichiers de données séparées par des virgules"
     mime:     text/comma-separated-values
   css:
     desc:     "Fichiers de feuilles de style CSS"
@@ -399,7 +414,7 @@ extension:
     desc:     "Fichiers Microsoft RTF"
     mime:     text/rtf
   tsv:
-    desc:     "Fichiers de donn�es s�par�es par des tabulations"
+    desc:     "Fichiers de données séparées par des tabulations"
     mime:     text/tab-separated-values
   wml:
     desc:     "Fichiers WML (WAP)"

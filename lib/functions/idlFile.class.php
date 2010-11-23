@@ -195,7 +195,9 @@ class idlFile extends idlFunction {
     $resp->setHttpHeader('Content-Description',"File Transfer");
     $resp->setHttpHeader('Content-Type', $options['mimetype']);
     $resp->setHttpHeader('Content-Transfer-Encoding', 'binary');
-    $resp->setHttpHeader('Content-Length', $options['size']);
+    if ($options['size'] > 0){
+      $resp->setHttpHeader('Content-Length', $options['size']);
+    }
     
     // Filename settings, more info in http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1
     $resp->setHttpHeader("Content-Disposition", "attachment; filename=\"".$options['filename']."\"");   

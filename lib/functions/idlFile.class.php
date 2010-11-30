@@ -117,7 +117,6 @@ class idlFile extends idlFunction {
    */
   public static function sendFileToClient($path, $filename = null, $mimetype = ""){
     return self::__sendToClient(array(
-      'type' => 'file',
       'path' => preg_replace('@[\\\\/]@', DIRECTORY_SEPARATOR, $path),
       'filename' => isset($filename) ? $filename : basename($path),
       'size' => filesize($path),
@@ -154,7 +153,21 @@ class idlFile extends idlFunction {
       'size' => $size,
       'mimetype' => $mimetype
     ));
-    
+  }
+
+  /**
+   * Send headers only to the client, the data have to be send latter by the caller
+   * @param string $url URL to retrieved and to send
+   * @param string $filename Name of the attatchement
+   * @param int $size Size of the remote content in bytes 
+   */
+  public static function sendHeadersOnlyToClient($filename, $size = 0, $mimetype = ""){
+    return self::__sendToClient(array(
+      'type' => 'headers_only',
+      'filename' => $filename,
+      'size' => $size,
+      'mimetype' => $mimetype
+    ));
   }
   
   
@@ -164,11 +177,20 @@ class idlFile extends idlFunction {
    *   * sendFileToClient
    *   * sendDataToClient
    *   * sendUrlToClient
+   *   * sendHeadersOnlyToClient
    * @param array $options Various options of the send
    * 
    * TODO Need a full review of all header to better match standard
    */
   public static function __sendToClient($options){
+    
+    $options = idlOption::merge($options, array(
+      'type' => 'file',
+      'size' => 0,
+      'filename' => ''
+    ),
+    array('path', 'mimetype')
+    );
       
     // Get mimetype if not define
     if (!isset($options['mimetype']) || $options['mimetype'] == "") {
@@ -200,7 +222,9 @@ class idlFile extends idlFunction {
     }
     
     // Filename settings, more info in http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.5.1
-    $resp->setHttpHeader("Content-Disposition", "attachment; filename=\"".$options['filename']."\"");   
+    if ($options['filename'] != ''){
+      $resp->setHttpHeader("Content-Disposition", "attachment; filename=\"".$options['filename']."\"");
+    }   
     
     // Internet Explorer specific headers
     if ($browser == "Internet Explorer") {
@@ -213,13 +237,18 @@ class idlFile extends idlFunction {
     
     // Sending, the ob_end_clean in mandatory to avoid memory_limit problem
     ob_end_clean();
+    
     // Force sending the header
     $resp->sendHttpHeaders();
+    
     // Transfer the file
-    if ( $options['type'] == 'data' ) {
+    if ( $options['type'] == 'headers_only' ) {
+      return;
+    }
+    else if ( $options['type'] == 'data' ) {
       echo $options['data'];
     }
-    else {
+    else { // for file and url
       readfile($options['path']);
     }
     

@@ -22,6 +22,21 @@ class idlMimetype extends idlFunction {
     return self::$mimetypes;
   }
   
+  /**
+   * Retunn all extension associated to a given mimetype
+   * @param string $mimetype
+   * @return array
+   */
+  public static function getExtensions($mimetype){
+    $extensions = array();
+    foreach (self::getAll() as $ext => $typeDef){
+      if ($typeDef['mime'] == $mimetype) {
+        $extensions[] = $ext;
+      }
+    }
+    return $extensions;
+  }
+  
 
    
   

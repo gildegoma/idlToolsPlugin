@@ -38,7 +38,7 @@ class idlFile extends idlFunction {
   
   /**
    * @deprecated Use guestMimeTypeFromFilename() insted
-   * @see idlArray::guestMimeTypeFromFilename
+   * @see idlFile::guestMimeTypeFromFilename
    */
   public static function guestMimeTypeFormFilename($filename){
     return self::guestMimeTypeFromFilename($filename);

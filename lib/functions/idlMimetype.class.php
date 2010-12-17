@@ -37,7 +37,14 @@ class idlMimetype extends idlFunction {
     return $extensions;
   }
   
-
-   
+  public static function getDescriptions($mimetype){
+    $descriptions = array();
+    foreach (self::getAll() as $ext => $typeDef){
+      if ($typeDef['mime'] == $mimetype) {
+        $descriptions[] = $typeDef['desc'];
+      }
+    }
+    return $descriptions;
+  }
   
 }

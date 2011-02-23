@@ -14,4 +14,17 @@ class idlRandom extends idlFunction {
     return $id;
   }
   
+  /**
+   * Retun a human readable string compose of alphanumerics value 
+   * @param unknown_type $lenght
+   */
+  public static function getHumanString($length = 20){
+    $val = '';
+    $values = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for ( $i = 0; $i < $length; $i++ ) {
+      $val .= $values[rand( 0, 35 )];
+    }
+    return $val;
+  }
+  
 }

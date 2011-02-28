@@ -64,7 +64,7 @@ class idlOption extends idlFunction {
       // passed
       if ($require && !array_key_exists($param, $options)) {
         throw new Exception('The param '.$param.' MUST be present! Params provided : '
-            .idlArray::toString($options));
+            .idlArray::toString($options, true));
       }
       
       // This array contains every allowed option without the "*", for further check

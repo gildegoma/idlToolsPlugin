@@ -43,9 +43,46 @@ class idlOption extends idlFunction {
    * @return boolean true on success // For tests purpose
    */
   public static function validate(array $options, array $allows){
+    $parameters = array();
     
-    //return true;
+    // For every allowed option
+    foreach ($allows as $allow) {
+      $require = false;
+      
+      // If first character is a "*", it means it is a required option
+      if (substr($allow, 0, 1) == '*') {
+        $require = true;
+        // Save param name (without the "*") for further check
+        $param = substr($allow, 1, strlen($allow));
+      }
+      else { // It is not a required option
+        // Save param name for further check
+        $param = $allow;
+      }
+      
+      // If it is a required option and it does not exist as a key in the options list
+      // passed
+      if ($require && !array_key_exists($param, $options)) {
+        throw new Exception('The param '.$param.' MUST be present! Params provided : '
+            .idlArray::toString($options));
+      }
+      
+      // This array contains every allowed option without the "*", for further check
+      $parameters[] = $param;
+    }
+    
+    // For every option given
+    foreach ($options as $key => $value) {
+      // If an option name (i.e. a key of the array) is not in the allowed list
+      if (!in_array($key, $parameters)) {
+        throw new Exception('The param '.$key.' is not ALLOWED! Allowed params are: '
+            .idlArray::toString($allows));
+      }
+    }
+    
+    // When we reach that point, it means no exception was thrown and everything was
+    // fine, so we return true for the unit tests.
+    return true;
   }
-   
   
 }

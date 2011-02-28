@@ -53,7 +53,7 @@ class idlOption extends idlFunction {
       if (substr($allow, 0, 1) == '*') {
         $require = true;
         // Save param name (without the "*") for further check
-        $param = substr($allow, 1, strlen($allow));
+        $param = substr($allow, 1);
       }
       else { // It is not a required option
         // Save param name for further check
